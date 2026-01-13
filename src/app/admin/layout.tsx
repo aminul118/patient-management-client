@@ -1,5 +1,5 @@
-import DashboardBreadcrumb from '@/components/layouts/dashboard/admin/DashboardBreadcrumb ';
-import AdminSidebar from '@/components/layouts/dashboard/admin/admin-sidebar';
+import AdminSidebar from '@/components/layouts/admin/admin-sidebar';
+import DashboardBreadcrumb from '@/components/layouts/admin/DashboardBreadcrumb ';
 import { Separator } from '@/components/ui/separator';
 import {
   SidebarInset,

@@ -1,5 +1,5 @@
 import Logo from '@/assets/logo/Logo';
-import { adminSidebarmenu } from '@/components/layouts/dashboard/admin/admin-menu';
+
 import { Separator } from '@/components/ui/separator';
 import {
   Sidebar,
@@ -11,6 +11,7 @@ import {
 import { getMe } from '@/services/user/users';
 import Link from 'next/link';
 import Menu from './Menu';
+import { adminSidebarmenu } from './admin-menu';
 import FooterUser from './footer-user';
 
 const AdminSidebar = async () => {
