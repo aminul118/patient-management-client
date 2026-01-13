@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
+import SubmitButton from '@/components/common/button/submit-button';
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -22,18 +23,18 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import Password from '@/components/ui/password';
-import { useRegisterForAdminMutation } from '@/redux/features/auth/auth.api';
+import useActionHandler from '@/hooks/useActionHandler';
+import { registerUserFromAdmin } from '@/services/user/register';
 import { registrationFormValidation } from '@/zod/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 import { z } from 'zod';
 
 const NewUserModal = () => {
   const [open, setOpen] = useState(false);
-  const [registration, { isLoading }] = useRegisterForAdminMutation();
+  const { executePost } = useActionHandler();
   const form = useForm<z.infer<typeof registrationFormValidation>>({
     resolver: zodResolver(registrationFormValidation),
     defaultValues: {
@@ -50,16 +51,18 @@ const NewUserModal = () => {
     const { firstName, lastName, email, phone, password } = data;
     const payload = { firstName, lastName, email, phone, password };
 
-    try {
-      const res = await registration(payload).unwrap();
-      if (res.statusCode === 201) {
-        toast.success(res.message);
-        form.reset();
-        setOpen(false);
-      }
-    } catch (error: any) {
-      toast.error(error.message || 'Something Went Wrong');
-    }
+    await await executePost({
+      action: () => registerUserFromAdmin(payload),
+      success: {
+        onSuccess: () => {
+          form.reset();
+          setOpen(false);
+        },
+        message: 'User create successfully.',
+        loadingText: 'New user creating...',
+      },
+      errorMessage: 'Failed to create new user',
+    });
   };
 
   return (
@@ -195,12 +198,7 @@ const NewUserModal = () => {
                       Cancel
                     </Button>
                   </AlertDialogCancel>
-                  <Button
-                    disabled={!form.formState.isValid || isLoading}
-                    type="submit"
-                  >
-                    Create
-                  </Button>
+                  <SubmitButton loading={form.formState.isSubmitting} />
                 </AlertDialogFooter>
               </form>
             </Form>

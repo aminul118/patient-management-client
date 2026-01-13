@@ -23,7 +23,7 @@ const AdminSidebar = async () => {
         <Link href="/admin" className="py-4">
           <Logo
             LogoHeight={80}
-            LogoWidth={180}
+            LogoWidth={80}
             className="flex justify-center"
           />
         </Link>

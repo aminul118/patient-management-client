@@ -5,7 +5,6 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { IUser } from '@/types';
 import { BadgeCheck } from 'lucide-react';
-import UserActions from './user-actions';
 
 const UsersColum: Column<IUser>[] = [
   {
@@ -46,10 +45,6 @@ const UsersColum: Column<IUser>[] = [
   {
     header: 'User Join Date & Time',
     accessor: (u) => <DateFormat date={u.createdAt} />,
-  },
-  {
-    header: 'Actions',
-    accessor: (u) => <UserActions user={u} />,
   },
 ];
 

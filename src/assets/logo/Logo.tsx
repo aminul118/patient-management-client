@@ -8,9 +8,9 @@ interface Props extends DivProps {
 
 const Logo = ({ LogoWidth = 200, LogoHeight = 80, ...props }: Props) => {
   return (
-    <div {...props}>
+    <div {...props} className="flex flex-col items-center justify-center">
       <Image
-        src="/logo.svg"
+        src="/logo.png"
         alt="Smart Healthcare and Research Limited logo"
         width={LogoWidth}
         height={LogoHeight}

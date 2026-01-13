@@ -1,6 +1,4 @@
 import { poppins } from '@/config/google-fonts';
-import { AppDataProvider } from '@/providers/AppData';
-import ReduxProvider from '@/providers/ReduxProvider';
 import ThemeProvider from '@/providers/ThemeProvider';
 import generateMetaTags from '@/seo/generateMetaTags';
 import '@/styles/custom.css';
@@ -9,24 +7,19 @@ import { Children } from '@/types';
 import { Metadata } from 'next';
 import { Toaster } from 'sonner';
 
-
 const PublicLayout = ({ children }: Children) => {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={poppins.className} suppressHydrationWarning>
-        <ReduxProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <AppDataProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
           {children}
-            </AppDataProvider>
-            <Toaster position="top-right" richColors theme="system" />
-          </ThemeProvider>
-        </ReduxProvider>
+          <Toaster position="top-right" richColors theme="system" />
+        </ThemeProvider>
       </body>
     </html>
   );

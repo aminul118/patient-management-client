@@ -1,5 +1,5 @@
 import { MenuGroup } from '@/types';
-import { BookImage, Gauge, Lock, Users } from 'lucide-react';
+import { BookImage, Gauge, Users } from 'lucide-react';
 
 export const adminSidebarmenu: MenuGroup[] = [
   {
@@ -34,11 +34,6 @@ export const adminSidebarmenu: MenuGroup[] = [
         name: 'Registered Users',
         url: '/admin/users',
         icon: Users,
-      },
-      {
-        name: 'Change Password',
-        url: '/admin/change-password',
-        icon: Lock,
       },
     ],
   },
