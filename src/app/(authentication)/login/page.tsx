@@ -20,7 +20,7 @@ const LoginPage = () => {
                   <Logo />
                 </Link>
                 <p className="text-muted-foreground mt-4 text-center">
-                  Login to your A1 Lifts & Engineering portal
+                  Login to your portal
                 </p>
               </div>
               {/* Form Section */}

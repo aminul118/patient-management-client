@@ -12,22 +12,22 @@ export const adminSidebarmenu: MenuGroup[] = [
       },
       {
         name: 'GDM Management',
-        url: '/admin/gdm-management',
+        url: '/admin/gdm',
         icon: BookImage,
       },
       {
         name: 'PCOS Management',
-        url: '/admin/pcos-management',
+        url: '/admin/pcos',
         icon: BookImage,
       },
       {
         name: 'Infertility Management',
-        url: '/admin/infertility-management',
+        url: '/admin/infertility',
         icon: BookImage,
       },
       {
         name: 'Overweight Management',
-        url: '/admin/overweight-management',
+        url: '/admin/over-weight',
         icon: BookImage,
       },
       {

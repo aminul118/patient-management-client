@@ -6,7 +6,7 @@ interface Props extends DivProps {
   LogoHeight?: number;
 }
 
-const Logo = ({ LogoWidth = 200, LogoHeight = 80, ...props }: Props) => {
+const Logo = ({ LogoWidth = 100, LogoHeight = 80, ...props }: Props) => {
   return (
     <div {...props} className="flex flex-col items-center justify-center">
       <Image

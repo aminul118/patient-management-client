@@ -29,8 +29,7 @@ export default PublicLayout;
 
 //>> SEO Start
 export const metadata: Metadata = generateMetaTags({
-  title:
-    'A1 Lifts and Engineering -Leading Lift & Escalator Company in Bangladesh ',
+  title: 'Patient Management',
   description:
     'A1 Lifts and Enginnering is the best lift & Escalator company in Bangladesh that provides passenger lifts, hospital lifts, and capsule lifts, with technical services,. Lift maintains',
   keywords:

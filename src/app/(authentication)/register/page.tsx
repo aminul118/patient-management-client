@@ -36,9 +36,7 @@ const RegisterPage = () => {
                 <Link href={'/'}>
                   <Logo />
                 </Link>
-                <p className="text-muted-foreground text-balance">
-                  Register to A1 Lifts & Engineering
-                </p>
+                <p className="text-muted-foreground text-balance">Register</p>
               </div>
 
               <RegisterForm />
