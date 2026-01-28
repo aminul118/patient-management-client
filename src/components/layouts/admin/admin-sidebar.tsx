@@ -1,4 +1,4 @@
-import Logo from '@/assets/logo/Logo';
+import Logo from '@/assets/Logo';
 
 import { Separator } from '@/components/ui/separator';
 import {

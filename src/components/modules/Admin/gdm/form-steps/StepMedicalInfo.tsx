@@ -23,6 +23,7 @@ interface Props {
 
 const StepMedicalInfo = ({ form, onNext, onBack }: Props) => {
   const diabetesType = form.watch('diabetesKnownSince');
+  const ogttDone = form.watch('ogttDoneAt6Weeks');
 
   return (
     <>
@@ -124,7 +125,9 @@ const StepMedicalInfo = ({ form, onNext, onBack }: Props) => {
         name="deliveryTimeInWeek"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Baby Cloud Time for delivery (One Week)</FormLabel>
+            <FormLabel>
+              At how many weeks of gestation was your delivery?
+            </FormLabel>
             <FormControl>
               <Input placeholder="2  " {...field} />
             </FormControl>
@@ -213,20 +216,64 @@ const StepMedicalInfo = ({ form, onNext, onBack }: Props) => {
         )}
       />
 
-      {/* Sugar Level After 6 Week */}
+      {/* OGTT done at 6 weeks */}
       <FormField
         control={form.control}
-        name="sugarLevelAfter6Week"
+        name="ogttDoneAt6Weeks"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Sugar Level After 6 Week </FormLabel>
+            <FormLabel>OGTT test done at 6 weeks?</FormLabel>
             <FormControl>
-              <Input placeholder="5" {...field} />
+              <RadioGroup
+                onValueChange={field.onChange}
+                value={field.value}
+                className="flex gap-4"
+              >
+                <div className="flex items-center gap-2">
+                  <RadioGroupItem value="yes" /> Yes
+                </div>
+                <div className="flex items-center gap-2">
+                  <RadioGroupItem value="no" /> No
+                </div>
+              </RadioGroup>
             </FormControl>
             <FormMessage />
           </FormItem>
         )}
       />
+
+      {/* If OGTT Yes → show values */}
+      {ogttDone === 'yes' && (
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+          <FormField
+            control={form.control}
+            name="ogttFastingValue"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Fasting Value (mmol/L or mg/dL)</FormLabel>
+                <FormControl>
+                  <Input placeholder="e.g. 5.1" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="ogtt2HourValue"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>2 hours after 75 g glucose</FormLabel>
+                <FormControl>
+                  <Input placeholder="e.g. 7.8" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+      )}
 
       <div className="flex justify-between space-x-2 pt-4">
         <SubmitButton />

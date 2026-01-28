@@ -1,6 +1,8 @@
 'use client';
 
 import { Form } from '@/components/ui/form';
+import useActionHandler from '@/hooks/useActionHandler';
+import { createGdmPatient } from '@/services/patient-management/gdm';
 import { gdmFormSchema, GdmFormValues } from '@/zod/gdm';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
@@ -10,23 +12,23 @@ import StepMedicalInfo from './form-steps/StepMedicalInfo';
 
 const GdmMultiStepForm = () => {
   const [step, setStep] = useState(1);
+  const { executePost } = useActionHandler();
 
   const form = useForm<GdmFormValues>({
     resolver: zodResolver(gdmFormSchema),
-    mode: 'onBlur',
     defaultValues: {
-      // Step 1
       patientId: '',
       name: '',
       age: '',
+      maritalStatus: 'married',
+      height: '',
       weight: '',
+      occupation: '',
+      familyIncome: '',
       address: '',
       phone: '',
       emergencyContact: '',
-      maritalStatus: 'married',
-
-      // Step 2
-      diabetesKnownSince: 'before_pregnancy',
+      diabetesKnownSince: 'during_pregnancy',
       diabetesDuration: '',
       insulin: 'no',
       comorbidity: '',
@@ -35,7 +37,9 @@ const GdmMultiStepForm = () => {
       babyWeight: '',
       BabyNICUNeed: 'no',
       sugarLevel2to3DayAfterDelivery: '',
-      sugarLevelAfter6Week: '',
+      ogttDoneAt6Weeks: 'no',
+      ogttFastingValue: '',
+      ogtt2HourValue: '',
     },
   });
 
@@ -56,8 +60,20 @@ const GdmMultiStepForm = () => {
 
   const prevStep = () => setStep((prev) => prev - 1);
 
-  const onSubmit = (values: GdmFormValues) => {
-    console.log('FINAL SUBMIT:', values);
+  const onSubmit = async (data: GdmFormValues) => {
+    console.log('FINAL SUBMIT:', data);
+    await executePost({
+      action: () => createGdmPatient(data),
+      success: {
+        onSuccess: () => {
+          form.reset();
+          setStep(1);
+        },
+        message: 'GDM Patient created successfully',
+        loadingText: 'Creating GDM Patient...',
+        redirectPath: '/admin/gdm',
+      },
+    });
   };
 
   return (

@@ -1,6 +1,7 @@
 'use client';
-import Logo from '@/assets/logo/Logo';
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import Logo from '@/assets/Logo';
 import SubmitButton from '@/components/common/button/submit-button';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -148,7 +149,11 @@ const VerifyOTPForm = () => {
                 )}
               />
 
-              <SubmitButton />
+              <SubmitButton
+                loading={form.formState.isSubmitting}
+                loadingEffect
+                text="Verify"
+              />
             </form>
           </Form>
 

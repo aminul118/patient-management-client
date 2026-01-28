@@ -4,7 +4,7 @@ const baseCookieOption = {
   httpOnly: true,
   secure: envVars.nodeEnv === 'production',
   sameSite: 'lax',
-  domain: envVars.nodeEnv === 'production' ? '.a1-lifts.com' : 'localhost',
+  domain: envVars.nodeEnv === 'production' ? '.aminuldev.site' : 'localhost',
   path: '/',
 } as const;
 

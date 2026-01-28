@@ -33,7 +33,7 @@ const adminProtectedRoutes: RouteConfig = {
 
 // USER only routes
 const userProtectedRoutes: RouteConfig = {
-  patterns: [/^\/(\/|$)/],
+  patterns: [/^\/dashboard(\/|$)/],
   exact: [],
 };
 

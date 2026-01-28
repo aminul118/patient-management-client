@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import Logo from '@/assets/logo/Logo';
+import Logo from '@/assets/Logo';
 import SubmitButton from '@/components/common/button/submit-button';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -17,8 +16,8 @@ import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { forgotPassword } from '@/services/auth/forgotPassword';
 import { forgotPasswordValidation } from '@/zod/auth';
-
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Send } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
@@ -93,7 +92,13 @@ const ForgotPasswordForm = ({ className }: { className?: string }) => {
                 )}
               />
 
-              <SubmitButton text="Send" loading={form.formState.isSubmitting} />
+              <SubmitButton
+                text="Send"
+                icon={<Send />}
+                loading={form.formState.isSubmitting}
+                loadingText="Sending"
+                loadingEffect
+              />
             </form>
           </Form>
 

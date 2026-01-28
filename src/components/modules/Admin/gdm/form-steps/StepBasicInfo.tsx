@@ -10,7 +10,6 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Textarea } from '@/components/ui/textarea';
 import { GdmFormValues } from '@/zod/gdm';
 import { UseFormReturn } from 'react-hook-form';
 
@@ -24,12 +23,18 @@ const StepBasicInfo = ({ form, onNext }: Props) => {
     <>
       <h2 className="text-xl font-semibold">Patient Basic Information</h2>
 
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 2xl:grid-cols-3">
         {[
           ['patientId', 'Patient ID'],
           ['name', 'Name'],
           ['age', 'Age'],
           ['weight', 'Weight (kg)'],
+          ['height', 'Height (cm)'],
+          ['occupation', 'Occupation'],
+          ['familyIncome', 'Family Income (H+W'],
+          ['address', 'Address'],
+          ['phone', 'Phone Number'],
+          ['emergencyContact', 'Emergency Contact'],
         ].map(([name, label]) => (
           <FormField
             key={name}
@@ -46,59 +51,27 @@ const StepBasicInfo = ({ form, onNext }: Props) => {
             )}
           />
         ))}
-
         <FormField
           control={form.control}
-          name="address"
+          name="maritalStatus"
           render={({ field }) => (
-            <FormItem className="col-span-2">
-              <FormLabel>Address</FormLabel>
+            <FormItem>
+              <FormLabel>Marital Status</FormLabel>
               <FormControl>
-                <Textarea {...field} />
+                <RadioGroup
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  className="flex gap-4"
+                >
+                  <RadioGroupItem value="married" /> Married
+                  <RadioGroupItem value="unmarried" /> Unmarried
+                </RadioGroup>
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-
-        {['phone', 'emergencyContact'].map((name) => (
-          <FormField
-            key={name}
-            control={form.control}
-            name={name as keyof GdmFormValues}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{name}</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        ))}
       </div>
-
-      <FormField
-        control={form.control}
-        name="maritalStatus"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Marital Status</FormLabel>
-            <FormControl>
-              <RadioGroup
-                value={field.value}
-                onValueChange={field.onChange}
-                className="flex gap-4"
-              >
-                <RadioGroupItem value="married" /> Married
-                <RadioGroupItem value="unmarried" /> Unmarried
-              </RadioGroup>
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
 
       <div className="flex justify-end pt-4">
         <Button type="button" onClick={onNext}>

@@ -34,8 +34,8 @@ const LoginForm = () => {
   const form = useForm<FormValues>({
     resolver: zodResolver(loginFormValidation),
     defaultValues: {
-      email: '',
-      password: '',
+      email: 'mr.aminul118@gmail.com',
+      password: 'Hyper@118',
     },
   });
 
@@ -60,7 +60,7 @@ const LoginForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-6"
+        className="flex flex-col gap-6 py-8"
       >
         {/* Email */}
         <FormField
@@ -100,7 +100,12 @@ const LoginForm = () => {
           )}
         />
 
-        <SubmitButton loading={form.formState.isSubmitting} />
+        <SubmitButton
+          loading={form.formState.isSubmitting}
+          text="Login"
+          loadingText="Logging In"
+          loadingEffect
+        />
       </form>
     </Form>
   );

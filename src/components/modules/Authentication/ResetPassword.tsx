@@ -1,7 +1,7 @@
 'use client';
-import Logo from '@/assets/logo/Logo';
+
+import Logo from '@/assets/Logo';
 import SubmitButton from '@/components/common/button/submit-button';
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import {
@@ -122,6 +122,8 @@ const ResetPassword = ({ props }: { props: Record<string, any> }) => {
                 <SubmitButton
                   text="Reset Password"
                   loading={form.formState.isSubmitting}
+                  loadingText="Password resetting"
+                  loadingEffect
                 />
               </form>
 
