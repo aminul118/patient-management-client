@@ -51,30 +51,32 @@ const SearchFilter = ({
   };
 
   return (
-    <div className="relative">
-      <Search
-        size={20}
-        className="text-muted-foreground absolute top-1/2 left-3 -translate-y-1/2"
-      />
+    <div>
+      <div className="relative">
+        <Search
+          size={20}
+          className="text-muted-foreground absolute top-1/2 left-3 -translate-y-1/2"
+        />
 
-      <Input
-        id={id}
-        ref={inputRef}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        placeholder={placeholder}
-        className="w-sm pe-9 pl-10"
-      />
+        <Input
+          id={id}
+          ref={inputRef}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          placeholder={placeholder}
+          className="w-sm pe-9 pl-10"
+        />
 
-      {value && (
-        <button
-          type="button"
-          onClick={handleClearInput}
-          className="text-muted-foreground absolute inset-y-0 end-0 flex w-9 items-center justify-center hover:text-red-500"
-        >
-          <CircleXIcon size={16} />
-        </button>
-      )}
+        {value && (
+          <button
+            type="button"
+            onClick={handleClearInput}
+            className="text-muted-foreground absolute inset-y-0 end-0 flex w-9 items-center justify-center hover:text-red-500"
+          >
+            <CircleXIcon size={16} />
+          </button>
+        )}
+      </div>
     </div>
   );
 };

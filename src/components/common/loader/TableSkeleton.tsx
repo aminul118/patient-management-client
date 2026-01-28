@@ -44,7 +44,7 @@ const TableSkeleton = ({
   hasPagination = false,
 }: TableSkeletonProps) => {
   return (
-    <section className="mx-auto w-11/12 overflow-x-hidden py-8">
+    <section className="mx-auto w-11/12 overflow-x-hidden">
       {/* Title */}
       <Skeleton className="mb-8 h-10 w-96 rounded-md" />
 
@@ -97,7 +97,7 @@ const Filters = ({ filterColumns }: { filterColumns: ColumnConfig[] }) => {
   return (
     <div className="mb-6 flex flex-wrap items-center justify-between gap-2">
       {/* Search */}
-      <Skeleton className="h-10 w-sm rounded-md" />
+      <Skeleton className="h-10 w-64 rounded-md" />
 
       {/* Right actions */}
       <div className="flex flex-wrap items-center gap-2">

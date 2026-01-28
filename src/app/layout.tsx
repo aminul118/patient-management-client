@@ -1,4 +1,4 @@
-import { poppins } from '@/config/google-fonts';
+import fonts from '@/config/fonts.config';
 import ThemeProvider from '@/providers/ThemeProvider';
 import generateMetaTags from '@/seo/generateMetaTags';
 import '@/styles/custom.css';
@@ -10,7 +10,7 @@ import { Toaster } from 'sonner';
 const PublicLayout = ({ children }: Children) => {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={poppins.className} suppressHydrationWarning>
+      <body className={fonts.spaceGrotesk.className} suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

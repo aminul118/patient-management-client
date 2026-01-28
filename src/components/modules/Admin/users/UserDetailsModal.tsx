@@ -1,6 +1,6 @@
 'use client';
 
-import DateFormat from '@/components/common/date-format';
+import DateFormat from '@/components/common/formater/date-format';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import {

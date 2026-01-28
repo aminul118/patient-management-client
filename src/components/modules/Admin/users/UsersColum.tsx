@@ -1,4 +1,4 @@
-import DateFormat from '@/components/common/date-format';
+import DateFormat from '@/components/common/formater/date-format';
 import PlaceHolderImage from '@/components/common/PlaceHolderImage';
 import { Column } from '@/components/common/table/TableManageMent';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';

@@ -1,4 +1,4 @@
-import DateFormat from '@/components/common/date-format';
+import DateFormat from '@/components/common/formater/date-format';
 import { Column } from '@/components/common/table/TableManageMent';
 import { IGdm } from '@/types';
 import GdmActions from './GdmActions';
