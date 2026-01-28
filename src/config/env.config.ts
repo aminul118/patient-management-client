@@ -3,8 +3,8 @@ const nodeEnv = process.env.NODE_ENV;
 const domain = process.env.NEXT_PUBLIC_COOKIE_DOMAIN as string;
 const accessSecret = process.env.JWT_ACCESS_SECRET as string;
 const refreshSecret = process.env.JWT_REFRESH_SECRET as string;
-const accessTokenMaxAge = Number(process.env.JWT_ACCESS_EXPIRES as string);
-const refreshTokenMaxAge = Number(process.env.JWT_REFRESH_EXPIRES as string);
+const accessTokenMaxAge = parseInt(process.env.JWT_ACCESS_EXPIRES as string);
+const refreshTokenMaxAge = parseInt(process.env.JWT_REFRESH_EXPIRES as string);
 const googleAnalytics = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS as string;
 const googleTagManagerId = process.env
   .NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID as string;

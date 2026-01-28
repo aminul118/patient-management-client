@@ -1,16 +1,15 @@
-import metaConfig from "@/config/meta.config";
-import { MetaProps } from "@/types";
-
-import { Metadata } from "next";
+import metaConfig from '@/config/meta.config';
+import { MetaProps } from '@/types';
+import { Metadata } from 'next';
 
 const generateMetaTags = ({
   title,
   description,
   keywords,
   image = metaConfig.baseImage,
-  websitePath = "",
+  websitePath = '',
 }: MetaProps): Metadata => {
-  const cleanPath = websitePath.replace(/^\/+/, "").replace(/\/+$/, "");
+  const cleanPath = websitePath.replace(/^\/+/, '').replace(/\/+$/, '');
 
   const {
     applicationName,
@@ -32,7 +31,7 @@ const generateMetaTags = ({
     keywords,
     category,
     openGraph: {
-      type: "website",
+      type: 'website',
       url: `${baseUrl}/${cleanPath}`,
       title,
       description,
@@ -41,7 +40,7 @@ const generateMetaTags = ({
     },
     robots: { index: true, follow: true },
     twitter: {
-      card: "summary_large_image",
+      card: 'summary_large_image',
       site: twitter_site,
       creator: twitter_site,
       title,
@@ -52,7 +51,7 @@ const generateMetaTags = ({
     alternates: {
       canonical: `${baseUrl}/${cleanPath}`,
       languages: {
-        "en-US": `${baseUrl}/en-US`,
+        'en-US': `${baseUrl}/en-US`,
       },
     },
     facebook: {
@@ -61,13 +60,13 @@ const generateMetaTags = ({
     verification: {
       google: metaConfig.verification.google,
       other: {
-        "msvalidate.01": metaConfig.verification.microsoft_bing,
+        'msvalidate.01': metaConfig.verification.microsoft_bing,
       },
     },
-    manifest: "/manifest.webmanifest",
+    manifest: '/manifest.webmanifest',
     publisher,
     creator: authors_name,
-    referrer: "no-referrer",
+    referrer: 'no-referrer',
     bookmarks,
     abstract: description,
     authors: [
