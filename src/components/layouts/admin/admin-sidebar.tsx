@@ -1,5 +1,3 @@
-import Logo from '@/assets/Logo';
-
 import { Separator } from '@/components/ui/separator';
 import {
   Sidebar,
@@ -10,23 +8,20 @@ import {
 } from '@/components/ui/sidebar';
 import { getMe } from '@/services/user/users';
 import Link from 'next/link';
+import Logo from '../../../assets/Logo';
 import Menu from './Menu';
 import { adminSidebarmenu } from './admin-menu';
 import FooterUser from './footer-user';
 
 const AdminSidebar = async () => {
   const { data } = await getMe();
-
+  console.log(data);
   return (
     <Sidebar collapsible="icon">
       {/* Header */}
       <SidebarHeader>
         <Link href="/admin" className="py-4">
-          <Logo
-            LogoHeight={80}
-            LogoWidth={80}
-            className="flex justify-center"
-          />
+          <Logo />
         </Link>
       </SidebarHeader>
       <Separator />

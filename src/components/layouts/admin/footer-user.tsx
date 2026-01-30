@@ -5,6 +5,8 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -16,11 +18,23 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 import { IUser } from '@/types';
+import { Globe } from 'lucide-react';
+import Link from 'next/link';
 import DashboardThemeToggle from './dashboard-theme-toggle';
 
 const FooterUser = ({ user }: { user: IUser }) => {
-  console.log(user);
   const { isMobile } = useSidebar();
+
+  const fullName = `${user?.firstName ?? ''} ${user?.lastName ?? ''}`.trim();
+
+  const initials = fullName
+    ? fullName
+        .split(' ')
+        .map((word) => word[0])
+        .slice(0, 2)
+        .join('')
+        .toUpperCase()
+    : 'U';
 
   return (
     <SidebarMenu>
@@ -36,7 +50,7 @@ const FooterUser = ({ user }: { user: IUser }) => {
                   src={user?.picture ? user?.picture : '/profile.jpg'}
                   alt={user?.fullName}
                 />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarFallback>{initials}</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{user?.fullName}</span>
@@ -73,6 +87,11 @@ const FooterUser = ({ user }: { user: IUser }) => {
             <DashboardThemeToggle />
             <DropdownMenuSeparator />
 
+            <DropdownMenuGroup>
+              <DropdownMenuItem>
+                <Globe /> <Link href="/">Website</Link>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <LogOutDropDown />
           </DropdownMenuContent>
