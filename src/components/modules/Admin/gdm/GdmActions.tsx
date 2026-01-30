@@ -13,6 +13,7 @@ import { deleteSinglePatientInfo } from '@/services/patient-management/gdm';
 import { IGdm } from '@/types/api.types';
 import { EllipsisIcon, EyeIcon, Trash2Icon } from 'lucide-react';
 import { useState } from 'react';
+import GdmDetailsModal from './GdmDetailsModal';
 
 interface Props {
   patient: IGdm;
@@ -67,11 +68,11 @@ const GdmActions = ({ patient }: Props) => {
         onConfirm={() => handleDelete(patient._id)}
       />
 
-      {/* <ShowBlogModal
-        blog={blog}
+      <GdmDetailsModal
+        patient={patient}
         open={showDetailsOpen}
         setOpen={setShowDetailsOpen}
-      /> */}
+      />
     </>
   );
 };
