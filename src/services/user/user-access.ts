@@ -5,7 +5,7 @@ export type RouteConfig = {
   patterns: RegExp[];
 };
 
-// Public auth pages
+// 🔓 Public auth routes
 const authRoutes = [
   '/login',
   '/register',
@@ -13,60 +13,62 @@ const authRoutes = [
   '/reset-password',
 ];
 
-// COMMON protected routes (all logged-in users)
+// 🔐 Common protected routes (all logged-in users)
 const commonProtectedRoutes: RouteConfig = {
   exact: ['/my-profile', '/settings'],
-  patterns: [/^\/password(\/|$)/], // optional password routes
+  patterns: [/^\/password(\/|$)/],
 };
 
-// SUPER_ADMIN only routes
+// 🛡 SUPER_ADMIN only
 const superAdminProtectedRoutes: RouteConfig = {
+  exact: [],
   patterns: [/^\/doctor(\/|$)/, /^\/assistants(\/|$)/, /^\/appointments(\/|$)/],
-  exact: [],
 };
 
-// ADMIN only routes
+// 🛠 ADMIN only
 const adminProtectedRoutes: RouteConfig = {
+  exact: [],
   patterns: [/^\/admin(\/|$)/],
-  exact: [],
 };
 
-// USER only routes
+// 👤 USER only
 const userProtectedRoutes: RouteConfig = {
-  patterns: [/^\/dashboard(\/|$)/],
   exact: [],
+  patterns: [/^\/dashboard(\/|$)/],
 };
 
-// Check if route is auth page
-const isAuthRoute = (pathname: string) => authRoutes.includes(pathname);
+// ---------- HELPERS ----------
 
-// Check if a pathname matches a RouteConfig
+const isAuthRoute = (pathname: string): boolean =>
+  authRoutes.includes(pathname);
+
 const isRouteMatches = (pathname: string, routes: RouteConfig): boolean => {
   if (routes.exact.includes(pathname)) return true;
   return routes.patterns.some((p) => p.test(pathname));
 };
 
-// Determine route owner
 const getRouteOwner = (
   pathname: string,
 ): 'ADMIN' | 'SUPER_ADMIN' | 'COMMON' | 'USER' | null => {
-  // SUPER_ADMIN first
   if (isRouteMatches(pathname, superAdminProtectedRoutes)) return 'SUPER_ADMIN';
   if (isRouteMatches(pathname, adminProtectedRoutes)) return 'ADMIN';
   if (isRouteMatches(pathname, userProtectedRoutes)) return 'USER';
   if (isRouteMatches(pathname, commonProtectedRoutes)) return 'COMMON';
-  return null; // public route
+  return null;
 };
 
-// Default dashboard per role
 const getDefaultDashboardRoute = (role: UserRole): string => {
-  if (role === 'ADMIN') return '/admin';
-  if (role === 'SUPER_ADMIN') return '/admin';
-  if (role === 'USER') return '/dashboard';
-  return '/';
+  switch (role) {
+    case 'ADMIN':
+    case 'SUPER_ADMIN':
+      return '/admin';
+    case 'USER':
+      return '/dashboard';
+    default:
+      return '/';
+  }
 };
 
-// Check if role can access path
 const isValidRedirectForRole = (path: string, role: UserRole): boolean => {
   const owner = getRouteOwner(path);
   if (owner === null || owner === 'COMMON') return true;
@@ -74,14 +76,10 @@ const isValidRedirectForRole = (path: string, role: UserRole): boolean => {
 };
 
 export {
-  adminProtectedRoutes,
   authRoutes,
-  commonProtectedRoutes,
   getDefaultDashboardRoute,
   getRouteOwner,
   isAuthRoute,
   isRouteMatches,
   isValidRedirectForRole,
-  superAdminProtectedRoutes,
-  userProtectedRoutes,
 };
