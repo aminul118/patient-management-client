@@ -17,6 +17,19 @@ export const proxy = async (req: NextRequest) => {
   const isAuthPage = isAuthRoute(pathname);
   const routeOwner = getRouteOwner(pathname);
 
+  // Prevent that user does not go to root route
+  if (pathname === '/') {
+    // Guest → login
+    if (!user) {
+      return NextResponse.redirect(new URL('/login', origin));
+    }
+
+    // Logged-in → dashboard
+    return NextResponse.redirect(
+      new URL(getDefaultDashboardRoute(role!), origin),
+    );
+  }
+
   //  allow public auth pages
   if (!user && isAuthPage) {
     return NextResponse.next();
