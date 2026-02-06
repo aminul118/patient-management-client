@@ -34,8 +34,8 @@ const LoginForm = () => {
   const form = useForm<FormValues>({
     resolver: zodResolver(loginFormValidation),
     defaultValues: {
-      email: 'mr.aminul118@gmail.com',
-      password: 'Hyper@118',
+      email: '',
+      password: '',
     },
   });
 
@@ -49,7 +49,9 @@ const LoginForm = () => {
         );
         toast.success(res.message || 'Login successful!');
       } else {
-        toast.error('Login failed. Please check your credentials.');
+        toast.error(
+          res.message || 'Login failed. Please check your Email and password.',
+        );
       }
     } catch {
       toast.error('Login failed. Please check your credentials.');

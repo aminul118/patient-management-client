@@ -1,3 +1,4 @@
+// middleware.ts
 import { NextResponse, type NextRequest } from 'next/server';
 import {
   getDefaultDashboardRoute,
@@ -16,27 +17,28 @@ export const proxy = async (req: NextRequest) => {
   const isAuthPage = isAuthRoute(pathname);
   const routeOwner = getRouteOwner(pathname);
 
-  // NOT logged in → allow auth pages
-  if (!user && isAuthPage) return NextResponse.next();
+  //  allow public auth pages
+  if (!user && isAuthPage) {
+    return NextResponse.next();
+  }
 
-  // Logged-in user → redirect away from auth pages
+  //  logged-in users should not see auth pages
   if (user && isAuthPage) {
-    const defaultRoute = getDefaultDashboardRoute(role!);
-    return NextResponse.redirect(new URL(defaultRoute, origin));
+    return NextResponse.redirect(
+      new URL(getDefaultDashboardRoute(role!), origin),
+    );
   }
 
-  // Not logged-in → protected route → redirect to login
-  if (!user && routeOwner !== null) {
-    const loginUrl = new URL('/login', origin);
-    loginUrl.searchParams.set('redirect', pathname);
-    const res = NextResponse.redirect(loginUrl);
-    return res;
+  //  protect routes
+  if (!user && routeOwner !== null && pathname !== '/login') {
+    return NextResponse.redirect(new URL('/login', origin));
   }
 
-  // Logged-in → check role access
+  //  role protection
   if (user && !isValidRedirectForRole(pathname, role!)) {
-    const defaultRoute = getDefaultDashboardRoute(role!);
-    return NextResponse.redirect(new URL(defaultRoute, origin));
+    return NextResponse.redirect(
+      new URL(getDefaultDashboardRoute(role!), origin),
+    );
   }
 
   return NextResponse.next();

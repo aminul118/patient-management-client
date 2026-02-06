@@ -59,8 +59,9 @@ const getRouteOwner = (
 
 const getDefaultDashboardRoute = (role: UserRole): string => {
   switch (role) {
-    case 'ADMIN':
     case 'SUPER_ADMIN':
+      return '/admin';
+    case 'ADMIN':
       return '/admin';
     case 'USER':
       return '/dashboard';
@@ -71,7 +72,11 @@ const getDefaultDashboardRoute = (role: UserRole): string => {
 
 const isValidRedirectForRole = (path: string, role: UserRole): boolean => {
   const owner = getRouteOwner(path);
-  if (owner === null || owner === 'COMMON') return true;
+
+  if (!owner || owner === 'COMMON') return true;
+
+  if (role === 'SUPER_ADMIN') return true; // 👑 override
+
   return owner === role;
 };
 
