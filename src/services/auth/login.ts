@@ -14,8 +14,6 @@ export const loginAction = async (payload: Record<string, string>) => {
       body: JSON.stringify(payload),
     });
 
-    console.log(res, 'res');
-
     if (!res?.success) {
       return { success: false, message: res.message || 'Something went wrong' };
     }
@@ -27,12 +25,14 @@ export const loginAction = async (payload: Record<string, string>) => {
 
     return {
       success: true,
+      message: 'Login Successfully',
       user,
     };
   } catch (err: any) {
     return {
       success: false,
       message: 'Login failed',
+      user: null,
     };
   }
 };
