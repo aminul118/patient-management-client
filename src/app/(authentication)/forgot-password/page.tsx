@@ -14,7 +14,7 @@ export default ForgotPasswordPage;
 
 // >> SEO Start
 export const metadata: Metadata = generateMetaTags({
-  title: 'Forgot Password | SHRL',
+  title: 'Forgot Password | Patient Management',
   description: 'Description for Forgot Password Page',
   keywords: 'keyword',
   websitePath: '/forgot-password',

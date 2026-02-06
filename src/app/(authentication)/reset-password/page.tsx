@@ -16,11 +16,11 @@ export default ResetPasswordPage;
 
 // >> SEO Start
 export const metadata: Metadata = generateMetaTags({
-  title: 'Reset Password | Smart Healthcare and Research Limited',
+  title: 'Reset Password | Patient Management',
   description:
-    'Reset your Smart Healthcare and Research Limited account password securely to regain access to your personalized healthcare and research dashboard.',
+    'Reset your Patient Management account password securely to regain access to your personalized healthcare and research dashboard.',
   keywords:
-    'reset password, password recovery, Smart Healthcare and Research Limited, SHRL, account access, secure login, healthcare platform, medical research account',
+    'reset password, password recovery, Patient Management, SHRL, account access, secure login, healthcare platform, medical research account',
   image: '/seo/shrl-hero-ss.png',
   websitePath: '/reset-password',
 });

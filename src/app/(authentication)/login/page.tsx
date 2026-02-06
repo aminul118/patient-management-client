@@ -47,7 +47,7 @@ export default LoginPage;
 
 // >> SEO Start
 export const metadata: Metadata = generateMetaTags({
-  title: 'Login | Smart Healthcare and Research Limited',
+  title: 'Login | Patient Management',
   description:
     'Login to your Smart Healthcare and Research Limited account to access secure medical data, research tools, and personalized healthcare services.',
   keywords:

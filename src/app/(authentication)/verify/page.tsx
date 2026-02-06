@@ -14,11 +14,11 @@ export default VerifyOTPPage;
 
 // >> SEO Start
 export const metadata: Metadata = generateMetaTags({
-  title: 'Verify OTP | Smart Healthcare and Research Limited',
+  title: 'Verify OTP | Patient Management',
   description:
-    'Verify your one-time password (OTP) to complete your Smart Healthcare and Research Limited account authentication securely.',
+    'Verify your one-time password (OTP) to complete your Patient Management account authentication securely.',
   keywords:
-    'verify otp, one time password, Smart Healthcare and Research Limited, SHRL, account verification, secure login, authentication, healthcare platform',
+    'verify otp, one time password, Patient Management, SHRL, account verification, secure login, authentication, healthcare platform',
   image: '/seo/shrl-hero-ss.png',
   websitePath: '/verify-otp',
 });
