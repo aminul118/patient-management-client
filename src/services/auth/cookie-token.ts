@@ -9,7 +9,8 @@ const setAccessToken = async (accessToken: string) => {
 
   (await cookieStore).set('accessToken', accessToken, {
     ...baseCookieOption,
-    maxAge: Number(envVars.jwt.accessTokenMaxAge),
+    maxAge: Number(envVars.jwt.accessTokenMaxAge) || 60 * 60,
+    domain: baseCookieOption.domain,
   });
 };
 
@@ -18,7 +19,8 @@ const setRefreshToken = async (refreshToken: string) => {
 
   (await cookieStore).set('refreshToken', refreshToken, {
     ...baseCookieOption,
-    maxAge: Number(envVars.jwt.refreshTokenMaxAge),
+    maxAge: Number(envVars.jwt.refreshTokenMaxAge) || 60 * 60,
+    domain: baseCookieOption.domain,
   });
 };
 
