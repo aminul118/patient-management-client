@@ -3,7 +3,7 @@ import serverFetch from '@/lib/server-fetch';
 import { ApiResponse, IGdm } from '@/types';
 
 const createGdmPatient = async (payload: Record<string, string>) => {
-  const res = await serverFetch.post<ApiResponse<null>>('/gdm/create', {
+  const res = await serverFetch.post<ApiResponse<IGdm>>('/gdm/create', {
     headers: {
       'Content-Type': 'application/json',
     },
@@ -14,15 +14,16 @@ const createGdmPatient = async (payload: Record<string, string>) => {
 };
 
 const updateGdmPatient = async (
-  payload: Record<string, string>,
   id: string,
+  payload: Record<string, string>,
 ) => {
-  const res = await serverFetch.post<ApiResponse<null>>(`/gdm/${id}`, {
+  const res = await serverFetch.put<ApiResponse<IGdm>>(`/gdm/${id}`, {
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(payload),
   });
+
   revalidate('gdm-patients');
   return res;
 };
@@ -43,14 +44,14 @@ const getGdmPatients = async (query: Record<string, string>) => {
   });
 };
 
-const getSingleGdmPatient = async (slug: string) => {
-  return await serverFetch.get<ApiResponse<null>>(`/gdm/${slug}`);
+const getSingleGdmPatientInfo = async (slug: string) => {
+  return await serverFetch.get<ApiResponse<IGdm>>(`/gdm/${slug}`);
 };
 
 export {
   createGdmPatient,
   deleteSinglePatientInfo,
   getGdmPatients,
-  getSingleGdmPatient,
+  getSingleGdmPatientInfo,
   updateGdmPatient,
 };

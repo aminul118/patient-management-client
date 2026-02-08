@@ -11,9 +11,9 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { deleteSinglePatientInfo } from '@/services/patient-management/gdm';
 import { IGdm } from '@/types/api.types';
-import { EllipsisIcon, EyeIcon, Trash2Icon } from 'lucide-react';
+import { Edit, EllipsisIcon, Trash2Icon } from 'lucide-react';
+import Link from 'next/link';
 import { useState } from 'react';
-import GdmDetailsModal from './GdmDetailsModal';
 
 interface Props {
   patient: IGdm;
@@ -21,7 +21,6 @@ interface Props {
 
 const GdmActions = ({ patient }: Props) => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [showDetailsOpen, setShowDetailsOpen] = useState(false);
 
   const handleDelete = async (id: string) => {
     return await deleteSinglePatientInfo(id);
@@ -44,10 +43,12 @@ const GdmActions = ({ patient }: Props) => {
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="end" className="min-w-48">
-          <DropdownMenuItem onClick={() => setShowDetailsOpen(true)}>
-            <EyeIcon className="mr-2 h-4 w-4" />
-            <span>Details</span>
-          </DropdownMenuItem>
+          <Link href={`/admin/gdm/${patient._id}`}>
+            <DropdownMenuItem>
+              <Edit className="mr-2 h-4 w-4" />
+              <span>Details</span>
+            </DropdownMenuItem>
+          </Link>
 
           <DropdownMenuSeparator />
           <DropdownMenuItem
@@ -66,12 +67,6 @@ const GdmActions = ({ patient }: Props) => {
         open={deleteModalOpen}
         setOpen={setDeleteModalOpen}
         onConfirm={() => handleDelete(patient._id)}
-      />
-
-      <GdmDetailsModal
-        patient={patient}
-        open={showDetailsOpen}
-        setOpen={setShowDetailsOpen}
       />
     </>
   );
