@@ -23,7 +23,7 @@ const StepBasicInfo = ({ form, onNext }: Props) => {
     <>
       <h2 className="text-xl font-semibold">Patient Basic Information</h2>
 
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 2xl:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 2xl:grid-cols-3">
         {[
           ['patientId', 'Patient ID'],
           ['name', 'Name'],

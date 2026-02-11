@@ -105,7 +105,7 @@ const GdmPatientDetailsClient = ({ patient, slug }: Props) => {
         </Button>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         <Card className="rounded-2xl">
           <CardHeader>
             <CardTitle className="flex items-center justify-between text-base">
@@ -198,9 +198,11 @@ const GdmPatientDetailsClient = ({ patient, slug }: Props) => {
 };
 
 const InfoRow = ({ label, value }: { label: string; value?: string }) => (
-  <div className="flex justify-between text-sm">
-    <span className="text-muted-foreground">{label}</span>
-    <span className="font-medium">{value || '—'}</span>
+  <div className="flex items-start justify-between gap-2 text-sm">
+    <span className="text-muted-foreground shrink-0">{label}</span>
+    <span className="text-right font-medium wrap-break-word">
+      {value || '—'}
+    </span>
   </div>
 );
 

@@ -1,6 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type { MenuGroup } from './admin-menu';
-export type { Auth, IBanner, IBlog, IContact, IGdm, IUser } from './api.types';
+export type {
+  Auth,
+  IBanner,
+  IBlog,
+  IContact,
+  IGdm,
+  IStats,
+  IUser,
+} from './api.types';
 export type { MetaConfig, MetaProps, Routes } from './meta.types';
 export type {
   Children,

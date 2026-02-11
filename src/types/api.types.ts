@@ -89,3 +89,9 @@ export interface IGdm {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface IStats {
+  userCount: number;
+  GdmPatientCount: number;
+  totalPatient: number;
+}
