@@ -3,9 +3,10 @@
 import { cn } from '@/lib/utils';
 import { IUser } from '@/types/api.types';
 import { KeyRound, Palette, User } from 'lucide-react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import ProfileClient from '../profile/ProfileClient';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import ChangePasswordClient from './ChangePasswordClient';
+import ProfileClient from './ProfileClient';
 import ThemeClient from './ThemeClient';
 
 type Props = {
@@ -34,13 +35,8 @@ const navigationItems = [
 ];
 
 const SettingsClient = ({ user }: Props) => {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const activeTab = searchParams.get('tab') || 'profile';
-
-  const handleTabChange = (value: string) => {
-    router.push(`/admin/settings?tab=${value}`);
-  };
 
   return (
     <div className="container mx-auto p-6">
@@ -60,9 +56,9 @@ const SettingsClient = ({ user }: Props) => {
               const isActive = activeTab === item.id;
 
               return (
-                <button
+                <Link
                   key={item.id}
-                  onClick={() => handleTabChange(item.id)}
+                  href={`/admin/settings?tab=${item.id}`}
                   className={cn(
                     'flex w-full items-start gap-3 rounded-lg p-3 text-left transition-colors',
                     isActive
@@ -70,7 +66,7 @@ const SettingsClient = ({ user }: Props) => {
                       : 'hover:bg-muted',
                   )}
                 >
-                  <Icon className="mt-0.5 h-5 w-5 flex-shrink-0" />
+                  <Icon className="mt-0.5 h-5 w-5 shrink-0" />
                   <div className="flex-1">
                     <div className="font-medium">{item.label}</div>
                     <div
@@ -84,7 +80,7 @@ const SettingsClient = ({ user }: Props) => {
                       {item.description}
                     </div>
                   </div>
-                </button>
+                </Link>
               );
             })}
           </nav>
