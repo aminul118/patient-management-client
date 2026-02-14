@@ -19,7 +19,7 @@ const LoginPage = () => {
                   <Logo />
                 </Link>
                 <p className="text-muted-foreground mt-4 text-center">
-                  Login to your portfolio portal
+                  Login to Patient Management System
                 </p>
               </div>
               {/* Form Section */}
