@@ -118,49 +118,47 @@ const ProfileClient = ({ user }: Props) => {
     .toUpperCase();
 
   return (
-    <div className="container mx-auto max-w-4xl p-6">
-      <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-3xl font-bold">My Profile</h1>
-        {!isEditing && (
-          <Button onClick={() => setIsEditing(true)}>
-            <PencilLine className="mr-2 h-4 w-4" /> Edit Profile
-          </Button>
-        )}
-      </div>
-
+    <div className="w-full max-w-4xl">
       <Card>
         <CardHeader>
-          <div className="flex flex-col items-center gap-4 sm:flex-row">
-            <div className="group relative">
-              <Avatar className="h-24 w-24">
-                <AvatarImage src={displayPicture} alt={displayFullName} />
-                <AvatarFallback className="text-2xl">
-                  {displayInitials}
-                </AvatarFallback>
-              </Avatar>
-              {isEditing && (
-                <div
-                  className="absolute inset-0 flex cursor-pointer items-center justify-center rounded-full bg-black/50 opacity-0 transition-opacity group-hover:opacity-100"
-                  onClick={() => fileInputRef.current?.click()}
-                >
-                  <Camera className="h-8 w-8 text-white" />
+          <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
+            <div className="flex flex-col items-center gap-4 sm:flex-row">
+              <div className="group relative">
+                <Avatar className="h-24 w-24">
+                  <AvatarImage src={displayPicture} alt={displayFullName} />
+                  <AvatarFallback className="text-2xl">
+                    {displayInitials}
+                  </AvatarFallback>
+                </Avatar>
+                {isEditing && (
+                  <div
+                    className="absolute inset-0 flex cursor-pointer items-center justify-center rounded-full bg-black/50 opacity-0 transition-opacity group-hover:opacity-100"
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    <Camera className="h-8 w-8 text-white" />
+                  </div>
+                )}
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  className="hidden"
+                  accept="image/*"
+                  onChange={onFileChange}
+                />
+              </div>
+              <div className="text-center sm:text-left">
+                <CardTitle className="text-2xl">{displayFullName}</CardTitle>
+                <CardDescription>{user.email}</CardDescription>
+                <div className="text-muted-foreground mt-2 text-sm">
+                  Role: <span className="capitalize">{user.role}</span>
                 </div>
-              )}
-              <input
-                type="file"
-                ref={fileInputRef}
-                className="hidden"
-                accept="image/*"
-                onChange={onFileChange}
-              />
-            </div>
-            <div className="text-center sm:text-left">
-              <CardTitle className="text-2xl">{displayFullName}</CardTitle>
-              <CardDescription>{user.email}</CardDescription>
-              <div className="text-muted-foreground mt-2 text-sm">
-                Role: <span className="capitalize">{user.role}</span>
               </div>
             </div>
+            {!isEditing && (
+              <Button onClick={() => setIsEditing(true)} size="sm">
+                <PencilLine className="mr-2 h-4 w-4" /> Edit Profile
+              </Button>
+            )}
           </div>
         </CardHeader>
 

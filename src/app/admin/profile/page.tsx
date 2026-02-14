@@ -1,10 +1,7 @@
-import ProfileClient from '@/components/modules/Admin/profile/ProfileClient';
-import { getMe } from '@/services/user/users';
+import { redirect } from 'next/navigation';
 
 const ProfilePage = async () => {
-  const { data: user } = await getMe();
-
-  return <ProfileClient user={user} />;
+  redirect('/admin/settings?tab=profile');
 };
 
 export default ProfilePage;

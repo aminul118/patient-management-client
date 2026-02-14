@@ -24,23 +24,53 @@ const UsersColum: Column<IUser>[] = [
       ),
   },
   {
+    header: 'Name',
+    accessor: (u) => (
+      <div className="font-medium">
+        {u.fullName || `${u.firstName} ${u.lastName}`}
+      </div>
+    ),
+  },
+  {
     header: 'Email',
     accessor: (u) => u.email,
   },
   {
     header: 'Role',
-    accessor: (u) => u.role,
+    accessor: (u) => (
+      <Badge variant="outline" className="capitalize">
+        {u.role}
+      </Badge>
+    ),
   },
   {
     header: 'Verify',
     accessor: (u) =>
       u.isVerified ? (
         <Badge className="bg-green-800 text-white">
-          <BadgeCheck /> Verified
+          <BadgeCheck className="mr-1 h-3 w-3" /> Verified
         </Badge>
       ) : (
         <Badge variant="secondary">Unverified</Badge>
       ),
+  },
+  {
+    header: 'Status',
+    accessor: (u) => {
+      const statusConfig = {
+        active: { label: 'Active', className: 'bg-green-600 text-white' },
+        inactive: { label: 'Inactive', className: 'bg-gray-500 text-white' },
+        blocked: { label: 'Blocked', className: 'bg-red-600 text-white' },
+      };
+
+      const status = u.isActive || 'inactive';
+      const config = statusConfig[status as keyof typeof statusConfig] || {
+        label: status,
+        className: 'bg-gray-500 text-white',
+      };
+
+      return <Badge className={config.className}>{config.label}</Badge>;
+    },
   },
   {
     header: 'User Join Date & Time',
