@@ -31,7 +31,7 @@ const StepBasicInfo = ({ form, onNext }: Props) => {
           ['weight', 'Weight (kg)'],
           ['height', 'Height (cm)'],
           ['occupation', 'Occupation'],
-          ['familyIncome', 'Family Income (H+W'],
+          ['familyIncome', 'Family Income (H+W)'],
           ['address', 'Address'],
           ['phone', 'Phone Number'],
           ['emergencyContact', 'Emergency Contact'],

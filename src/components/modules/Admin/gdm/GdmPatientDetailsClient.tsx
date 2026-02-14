@@ -73,6 +73,24 @@ const GdmPatientDetailsClient = ({ patient, slug }: Props) => {
     [patient],
   );
 
+  // BMI Calculate
+  const bmi = useMemo(() => {
+    const hStr = String(patient?.height ?? '').replace(/,/g, '.');
+    const wStr = String(patient?.weight ?? '').replace(/,/g, '.');
+
+    const h = parseFloat(hStr);
+    const w = parseFloat(wStr);
+
+    if (isNaN(h) || isNaN(w) || h <= 0 || w <= 0) return '—';
+
+    // Heuristically detect if height is in cm.
+    // If height > 3, assume cm.
+    const heightInMeters = h > 3 ? h / 100 : h;
+
+    const val = w / (heightInMeters * heightInMeters);
+    return val.toFixed(2);
+  }, [patient?.height, patient?.weight]);
+
   if (isEditing) {
     return (
       <div className="container mx-auto space-y-4 px-2">
@@ -133,7 +151,6 @@ const GdmPatientDetailsClient = ({ patient, slug }: Props) => {
               label="Emergency Contact"
               value={patient?.emergencyContact}
             />
-            <Separator />
             <InfoRow label="Address" value={patient?.address} />
           </CardContent>
         </Card>
@@ -145,6 +162,8 @@ const GdmPatientDetailsClient = ({ patient, slug }: Props) => {
           <CardContent className="grid gap-2">
             <InfoRow label="Height" value={patient?.height} />
             <InfoRow label="Weight" value={patient?.weight} />
+            <Separator />
+            <InfoRow label="BMI" value={bmi} />
           </CardContent>
         </Card>
 
