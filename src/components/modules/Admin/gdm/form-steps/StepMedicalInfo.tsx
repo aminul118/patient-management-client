@@ -30,217 +30,220 @@ const StepMedicalInfo = ({ form, onNext, onBack }: Props) => {
       <h2 className="text-xl font-semibold">Medical Information</h2>
 
       {/* Diabetes Known Since */}
-      <FormField
-        control={form.control}
-        name="diabetesKnownSince"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>When did you know you have diabetes?</FormLabel>
-            <FormControl>
-              <RadioGroup
-                onValueChange={field.onChange}
-                value={field.value}
-                className="flex flex-col gap-2"
-              >
-                <div className="flex items-center gap-2">
-                  <RadioGroupItem value="before_pregnancy" />
-                  Before pregnancy
-                </div>
-                <div className="flex items-center gap-2">
-                  <RadioGroupItem value="during_pregnancy" />
-                  During pregnancy
-                </div>
-                <div className="flex items-center gap-2">
-                  <RadioGroupItem value="custom" />
-                  Other (weeks)
-                </div>
-              </RadioGroup>
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-
-      {/* Custom Duration */}
-      {diabetesType === 'custom' && (
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 2xl:grid-cols-3">
+        {/* Diabetes Known Since */}
         <FormField
           control={form.control}
-          name="diabetesDuration"
+          name="diabetesKnownSince"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Duration</FormLabel>
+              <FormLabel>When did you know you have diabetes?</FormLabel>
               <FormControl>
-                <Input placeholder="e.g. 1 week, 2 weeks" {...field} />
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  value={field.value}
+                  className="flex flex-col gap-2"
+                >
+                  <div className="flex items-center gap-2">
+                    <RadioGroupItem value="before_pregnancy" />
+                    Before pregnancy
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <RadioGroupItem value="during_pregnancy" />
+                    During pregnancy
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <RadioGroupItem value="custom" />
+                    Other (weeks)
+                  </div>
+                </RadioGroup>
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-      )}
 
-      {/* Insulin */}
-      <FormField
-        control={form.control}
-        name="insulin"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>On Insulin?</FormLabel>
-            <FormControl>
-              <RadioGroup
-                onValueChange={field.onChange}
-                value={field.value}
-                className="flex gap-4"
-              >
-                <div className="flex items-center gap-2">
-                  <RadioGroupItem value="yes" /> Yes
-                </div>
-                <div className="flex items-center gap-2">
-                  <RadioGroupItem value="no" /> No
-                </div>
-              </RadioGroup>
-            </FormControl>
-            <FormMessage />
-          </FormItem>
+        {/* Custom Duration */}
+        {diabetesType === 'custom' && (
+          <FormField
+            control={form.control}
+            name="diabetesDuration"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Duration</FormLabel>
+                <FormControl>
+                  <Input placeholder="e.g. 1 week, 2 weeks" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         )}
-      />
 
-      {/* Co-morbidity */}
-      <FormField
-        control={form.control}
-        name="comorbidity"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Co-morbidity</FormLabel>
-            <FormControl>
-              <Textarea placeholder="e.g. Hypertension, Thyroid" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+        {/* Insulin */}
+        <FormField
+          control={form.control}
+          name="insulin"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>On Insulin?</FormLabel>
+              <FormControl>
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  value={field.value}
+                  className="flex gap-4"
+                >
+                  <div className="flex items-center gap-2">
+                    <RadioGroupItem value="yes" /> Yes
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <RadioGroupItem value="no" /> No
+                  </div>
+                </RadioGroup>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      {/* Delivery Time */}
-      <FormField
-        control={form.control}
-        name="deliveryTimeInWeek"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>
-              At how many weeks of gestation was your delivery?
-            </FormLabel>
-            <FormControl>
-              <Input placeholder="2  " {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+        {/* Co-morbidity */}
+        <FormField
+          control={form.control}
+          name="comorbidity"
+          render={({ field }) => (
+            <FormItem className="md:col-span-2">
+              <FormLabel>Co-morbidity</FormLabel>
+              <FormControl>
+                <Textarea placeholder="e.g. Hypertension, Thyroid" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      {/* Delivery Type */}
-      <FormField
-        control={form.control}
-        name="deliveryType"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Delivery Type?</FormLabel>
-            <FormControl>
-              <RadioGroup
-                onValueChange={field.onChange}
-                value={field.value}
-                className="flex gap-4"
-              >
-                <div className="flex items-center gap-2">
-                  <RadioGroupItem value="normal" /> Normal
-                </div>
-                <div className="flex items-center gap-2">
-                  <RadioGroupItem value="c-section" /> C Section
-                </div>
-              </RadioGroup>
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      {/* Baby Weight */}
-      <FormField
-        control={form.control}
-        name="babyWeight"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Baby Weight (kg)</FormLabel>
-            <FormControl>
-              <Input placeholder="2 Kg" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+        {/* Delivery Time */}
+        <FormField
+          control={form.control}
+          name="deliveryTimeInWeek"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                At how many weeks of gestation was your delivery?
+              </FormLabel>
+              <FormControl>
+                <Input placeholder="2  " {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      {/* Insulin */}
-      <FormField
-        control={form.control}
-        name="BabyNICUNeed"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Does the baby need NICU?</FormLabel>
-            <FormControl>
-              <RadioGroup
-                onValueChange={field.onChange}
-                value={field.value}
-                className="flex gap-4"
-              >
-                <div className="flex items-center gap-2">
-                  <RadioGroupItem value="Yes" /> Yes
-                </div>
-                <div className="flex items-center gap-2">
-                  <RadioGroupItem value="No" /> No
-                </div>
-              </RadioGroup>
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+        {/* Delivery Type */}
+        <FormField
+          control={form.control}
+          name="deliveryType"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Delivery Type?</FormLabel>
+              <FormControl>
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  value={field.value}
+                  className="flex gap-4"
+                >
+                  <div className="flex items-center gap-2">
+                    <RadioGroupItem value="normal" /> Normal
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <RadioGroupItem value="c-section" /> C Section
+                  </div>
+                </RadioGroup>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {/* Baby Weight */}
+        <FormField
+          control={form.control}
+          name="babyWeight"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Baby Weight (kg)</FormLabel>
+              <FormControl>
+                <Input placeholder="2 Kg" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <FormField
-        control={form.control}
-        name="sugarLevel2to3DayAfterDelivery"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Sugar Level 2/3 Days after Delivery </FormLabel>
-            <FormControl>
-              <Input placeholder="5" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+        {/* Insulin (Wrong comment in original code, this is NICU) */}
+        <FormField
+          control={form.control}
+          name="BabyNICUNeed"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Does the baby need NICU?</FormLabel>
+              <FormControl>
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  value={field.value}
+                  className="flex gap-4"
+                >
+                  <div className="flex items-center gap-2">
+                    <RadioGroupItem value="Yes" /> Yes
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <RadioGroupItem value="No" /> No
+                  </div>
+                </RadioGroup>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      {/* OGTT done at 6 weeks */}
-      <FormField
-        control={form.control}
-        name="ogttDoneAt6Weeks"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>OGTT test done at 6 weeks?</FormLabel>
-            <FormControl>
-              <RadioGroup
-                onValueChange={field.onChange}
-                value={field.value}
-                className="flex gap-4"
-              >
-                <div className="flex items-center gap-2">
-                  <RadioGroupItem value="yes" /> Yes
-                </div>
-                <div className="flex items-center gap-2">
-                  <RadioGroupItem value="no" /> No
-                </div>
-              </RadioGroup>
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+        <FormField
+          control={form.control}
+          name="sugarLevel2to3DayAfterDelivery"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Sugar Level 2/3 Days after Delivery </FormLabel>
+              <FormControl>
+                <Input placeholder="5" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* OGTT done at 6 weeks */}
+        <FormField
+          control={form.control}
+          name="ogttDoneAt6Weeks"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>OGTT test done at 6 weeks?</FormLabel>
+              <FormControl>
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  value={field.value}
+                  className="flex gap-4"
+                >
+                  <div className="flex items-center gap-2">
+                    <RadioGroupItem value="yes" /> Yes
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <RadioGroupItem value="no" /> No
+                  </div>
+                </RadioGroup>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
 
       {/* If OGTT Yes → show values */}
       {ogttDone === 'yes' && (

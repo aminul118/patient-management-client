@@ -219,9 +219,7 @@ const GdmPatientDetailsClient = ({ patient, slug }: Props) => {
 const InfoRow = ({ label, value }: { label: string; value?: string }) => (
   <div className="flex items-start justify-between gap-2 text-sm">
     <span className="text-muted-foreground shrink-0">{label}</span>
-    <span className="text-right font-medium wrap-break-word">
-      {value || '—'}
-    </span>
+    <span className="text-right font-medium break-words">{value || '—'}</span>
   </div>
 );
 
