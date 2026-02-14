@@ -18,7 +18,7 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 import { IUser } from '@/types';
-import { Globe } from 'lucide-react';
+import { Globe, User } from 'lucide-react';
 import Link from 'next/link';
 import DashboardThemeToggle from './dashboard-theme-toggle';
 
@@ -88,6 +88,9 @@ const FooterUser = ({ user }: { user: IUser }) => {
             <DropdownMenuSeparator />
 
             <DropdownMenuGroup>
+              <DropdownMenuItem>
+                <User /> <Link href="/admin/profile">Profile</Link>
+              </DropdownMenuItem>
               <DropdownMenuItem>
                 <Globe /> <Link href="/">Website</Link>
               </DropdownMenuItem>
