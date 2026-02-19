@@ -1,15 +1,27 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useMemo, useState } from 'react';
-
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-
 import { GdmFormValues } from '@/zod/gdm';
-import { PencilLine, X } from 'lucide-react';
+import {
+  Activity,
+  Baby,
+  Briefcase,
+  Calendar,
+  CreditCard,
+  FileText,
+  MapPin,
+  PencilLine,
+  Phone,
+  Syringe,
+  User,
+  Weight,
+  X,
+} from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useMemo, useState } from 'react';
 import GdmEditMultiStepForm from './GdmEditMultiStepForm';
 
 type Props = {
@@ -101,7 +113,7 @@ const GdmPatientDetailsClient = ({ patient, slug }: Props) => {
         <div className="flex items-center justify-between">
           <h1 className="text-lg font-semibold">Edit GDM Patient</h1>
           <Button variant="destructive" onClick={() => setIsEditing(false)}>
-            <X />
+            <X className="mr-2 h-4 w-4" />
             Cancel
           </Button>
         </div>
@@ -120,119 +132,320 @@ const GdmPatientDetailsClient = ({ patient, slug }: Props) => {
   }
 
   return (
-    <div className="container mx-auto px-2">
-      <div className="mb-4 flex items-center justify-end">
-        <Button onClick={() => setIsEditing(true)}>
-          <PencilLine /> Edit
-        </Button>
+    <div className="container mx-auto max-w-7xl space-y-6 p-2">
+      {/* Header Actions */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-foreground text-2xl font-bold tracking-tight">
+            Patient Overview
+          </h1>
+          <p className="text-muted-foreground text-sm">
+            View and manage patient health records
+          </p>
+        </div>
+        <div className="flex gap-3">
+          <Button onClick={() => setIsEditing(true)}>
+            <PencilLine className="mr-2 h-4 w-4" /> Edit Profile
+          </Button>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <Card className="rounded-2xl">
-          <CardHeader>
-            <CardTitle className="flex items-center justify-between text-base">
-              Basic Information
-              <Badge variant="outline">GDM</Badge>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="grid gap-2">
-            <InfoRow label="Patient ID" value={patient?.patientId} />
-            <InfoRow
-              label="Counseling Date"
-              value={
-                patient?.counselingDate
-                  ? new Date(patient.counselingDate).toLocaleDateString()
-                  : ''
-              }
+      {/* Main Dashboard Grid */}
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
+        {/* Left Sidebar - Patient Identity & Social */}
+        <div className="space-y-6 md:col-span-4 lg:col-span-3">
+          <Card className="overflow-hidden border-none shadow-md">
+            <div className="bg-primary/10 text-primary flex h-32 items-center justify-center">
+              <User size={64} className="opacity-80" />
+            </div>
+            <CardContent className="relative pt-0 text-center">
+              <div className="mt-4">
+                <h2 className="text-foreground text-xl font-bold capitalize">
+                  {patient?.name || 'Unknown Name'}
+                </h2>
+                <Badge variant="secondary" className="mt-2 text-xs font-normal">
+                  ID: {patient?.patientId || 'N/A'}
+                </Badge>
+              </div>
+
+              <Separator className="my-6" />
+
+              <div className="space-y-4 text-left">
+                <DetailItem
+                  icon={Calendar}
+                  label="Age"
+                  value={patient?.age ? `${patient.age} Years` : undefined}
+                  compact
+                />
+                <DetailItem
+                  icon={User}
+                  label="Marital Status"
+                  value={patient?.maritalStatus}
+                  compact
+                />
+                <DetailItem
+                  icon={Briefcase}
+                  label="Occupation"
+                  value={patient?.occupation}
+                  compact
+                />
+                <DetailItem
+                  icon={CreditCard}
+                  label="Income"
+                  value={patient?.familyIncome}
+                  compact
+                />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-none shadow-md">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-base">
+                <Phone className="text-primary h-4 w-4" /> Contact Details
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <DetailItem icon={Phone} label="Phone" value={patient?.phone} />
+              <DetailItem
+                icon={Phone}
+                label="Emergency"
+                value={patient?.emergencyContact}
+              />
+              <DetailItem
+                icon={MapPin}
+                label="Address"
+                value={patient?.address}
+              />
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Right Content - Clinical & Medical */}
+        <div className="space-y-6 md:col-span-8 lg:col-span-9">
+          {/* Vitals Summary Row */}
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+            <StatsCard
+              label="Height"
+              value={patient?.height}
+              unit="cm"
+              icon={Activity}
             />
-            <InfoRow label="Name" value={patient?.name} />
-            <InfoRow label="Age" value={patient?.age} />
-            <InfoRow label="Marital Status" value={patient?.maritalStatus} />
-            <InfoRow label="Occupation" value={patient?.occupation} />
-            <InfoRow label="Family Income" value={patient?.familyIncome} />
-          </CardContent>
-        </Card>
-
-        <Card className="rounded-2xl">
-          <CardHeader>
-            <CardTitle className="text-base">Contact</CardTitle>
-          </CardHeader>
-          <CardContent className="grid gap-2">
-            <InfoRow label="Phone" value={patient?.phone} />
-            <InfoRow
-              label="Emergency Contact"
-              value={patient?.emergencyContact}
+            <StatsCard
+              label="Weight"
+              value={patient?.weight}
+              unit="kg"
+              icon={Weight}
             />
-            <InfoRow label="Address" value={patient?.address} />
-          </CardContent>
-        </Card>
-
-        <Card className="rounded-2xl">
-          <CardHeader>
-            <CardTitle className="text-base">Anthropometry</CardTitle>
-          </CardHeader>
-          <CardContent className="grid gap-2">
-            <InfoRow label="Height" value={patient?.height} />
-            <InfoRow label="Weight" value={patient?.weight} />
-            <InfoRow label="Complication" value={patient?.complication} />
-            <Separator />
-            <InfoRow label="BMI" value={bmi} />
-          </CardContent>
-        </Card>
-
-        <Card className="rounded-2xl">
-          <CardHeader>
-            <CardTitle className="text-base">Diabetes History</CardTitle>
-          </CardHeader>
-          <CardContent className="grid gap-2">
-            <InfoRow
-              label="Diabetes Known Since"
-              value={patient?.diabetesKnownSince}
+            <StatsCard
+              label="BMI"
+              value={bmi}
+              icon={Activity}
+              highlight={Number(bmi) > 25}
             />
-            <InfoRow label="Duration" value={patient?.diabetesDuration} />
-            <InfoRow label="Insulin" value={patient?.insulin} />
-            <InfoRow label="Comorbidity" value={patient?.comorbidity} />
-          </CardContent>
-        </Card>
-
-        <Card className="rounded-2xl">
-          <CardHeader>
-            <CardTitle className="text-base">Delivery & Postpartum</CardTitle>
-          </CardHeader>
-          <CardContent className="grid gap-2">
-            <InfoRow
+            <StatsCard
               label="Delivery Week"
               value={patient?.deliveryTimeInWeek}
+              icon={Calendar}
             />
-            <InfoRow label="Delivery Type" value={patient?.deliveryType} />
-            <InfoRow label="Baby Weight" value={patient?.babyWeight} />
-            <InfoRow label="NICU Required" value={patient?.BabyNICUNeed} />
-            <InfoRow
-              label="Sugar (2–3 days after delivery)"
-              value={patient?.sugarLevel2to3DayAfterDelivery}
-            />
-          </CardContent>
-        </Card>
+          </div>
 
-        <Card className="rounded-2xl">
-          <CardHeader>
-            <CardTitle className="text-base">OGTT at 6 Weeks</CardTitle>
-          </CardHeader>
-          <CardContent className="grid gap-2">
-            <InfoRow label="OGTT Done" value={patient?.ogttDoneAt6Weeks} />
-            <InfoRow label="Fasting Value" value={patient?.ogttFastingValue} />
-            <InfoRow label="2 Hour Value" value={patient?.ogtt2HourValue} />
-          </CardContent>
-        </Card>
+          {/* Medical History Section */}
+          <Card className="overflow-hidden border-none shadow-md">
+            <CardHeader className="bg-muted/30 border-b px-6 py-4">
+              <div className="flex items-center gap-2">
+                <div className="bg-primary/10 text-primary rounded-full p-2">
+                  <Syringe size={18} />
+                </div>
+                <CardTitle className="text-lg">
+                  Diabetes & Medical History
+                </CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent className="grid gap-6 p-6 sm:grid-cols-2">
+              <DetailItem
+                icon={Calendar}
+                label="Diagnosis Timing"
+                value={
+                  patient?.diabetesKnownSince === 'fasting'
+                    ? 'Known prior to pregnancy'
+                    : 'Diagnosed during pregnancy'
+                }
+              />
+              <DetailItem
+                icon={Activity}
+                label="Duration of Diabetes"
+                value={patient?.diabetesDuration}
+              />
+              <DetailItem
+                icon={Syringe}
+                label="Insulin Required"
+                value={toYesNo(patient?.insulin).toUpperCase()}
+              />
+              <DetailItem
+                icon={FileText}
+                label="Comorbidities"
+                value={patient?.comorbidity}
+                fullWidth
+              />
+              <DetailItem
+                icon={Activity}
+                label="Other Complications"
+                value={patient?.complication}
+                fullWidth
+              />
+            </CardContent>
+          </Card>
+
+          <div className="grid gap-6 lg:grid-cols-2">
+            {/* Pregnancy & Delivery */}
+            <Card className="overflow-hidden border-none shadow-md">
+              <CardHeader className="bg-muted/30 border-b px-6 py-4">
+                <div className="flex items-center gap-2">
+                  <div className="bg-secondary text-secondary-foreground rounded-full p-2">
+                    <Baby size={18} />
+                  </div>
+                  <CardTitle className="text-lg">Delivery & Baby</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent className="grid gap-4 p-6">
+                <DetailItem
+                  icon={Activity}
+                  label="Delivery Type"
+                  value={patient?.deliveryType}
+                />
+                <DetailItem
+                  icon={Weight}
+                  label="Baby Weight"
+                  value={patient?.babyWeight}
+                />
+                <DetailItem
+                  icon={Activity}
+                  label="NICU Admission"
+                  value={toYesNo(patient?.BabyNICUNeed).toUpperCase()}
+                />
+                <DetailItem
+                  icon={Activity}
+                  label="Postpartum Sugar (2-3 Days)"
+                  value={patient?.sugarLevel2to3DayAfterDelivery}
+                />
+              </CardContent>
+            </Card>
+
+            {/* OGTT Results */}
+            <Card className="overflow-hidden border-none shadow-md">
+              <CardHeader className="bg-muted/30 border-b px-6 py-4">
+                <div className="flex items-center gap-2">
+                  <div className="bg-accent text-accent-foreground rounded-full p-2">
+                    <Activity size={18} />
+                  </div>
+                  <CardTitle className="text-lg">
+                    OGTT Results (6 Weeks)
+                  </CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent className="grid gap-4 p-6">
+                <DetailItem
+                  icon={Calendar}
+                  label="OGTT Performed"
+                  value={toYesNo(patient?.ogttDoneAt6Weeks).toUpperCase()}
+                />
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="border-border bg-card hover:bg-muted/50 rounded-lg border p-3 text-center transition-colors">
+                    <p className="text-muted-foreground text-xs uppercase">
+                      Fasting
+                    </p>
+                    <p className="text-foreground text-xl font-bold">
+                      {patient?.ogttFastingValue || '--'}
+                    </p>
+                  </div>
+                  <div className="border-border bg-card hover:bg-muted/50 rounded-lg border p-3 text-center transition-colors">
+                    <p className="text-muted-foreground text-xs uppercase">
+                      2 Hour
+                    </p>
+                    <p className="text-foreground text-xl font-bold">
+                      {patient?.ogtt2HourValue || '--'}
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
-const InfoRow = ({ label, value }: { label: string; value?: string }) => (
-  <div className="flex items-start justify-between gap-2 text-sm">
-    <span className="text-muted-foreground shrink-0">{label}</span>
-    <span className="text-right font-medium break-words">{value || '—'}</span>
+const StatsCard = ({
+  label,
+  value,
+  unit,
+  icon: Icon,
+  highlight,
+}: {
+  label: string;
+  value: string | number;
+  unit?: string;
+  icon: any;
+  highlight?: boolean;
+}) => (
+  <Card
+    className={`border-none shadow-sm transition-shadow hover:shadow-md ${highlight ? 'bg-destructive/10 ring-destructive/20 ring-1' : 'bg-card'}`}
+  >
+    <CardContent className="p-4">
+      <div className="flex items-center justify-between">
+        <p className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
+          {label}
+        </p>
+        <Icon
+          size={16}
+          className={highlight ? 'text-destructive' : 'text-primary/60'}
+        />
+      </div>
+      <div className="mt-2 flex items-end gap-1">
+        <h3 className="text-foreground text-2xl font-bold tracking-tight">
+          {value || '--'}
+        </h3>
+        {unit && value && (
+          <span className="text-muted-foreground mb-1 text-xs font-medium">
+            {unit}
+          </span>
+        )}
+      </div>
+    </CardContent>
+  </Card>
+);
+
+const DetailItem = ({
+  icon: Icon,
+  label,
+  value,
+  compact = false,
+  fullWidth = false,
+}: {
+  icon: any;
+  label: string;
+  value?: string | number | null;
+  compact?: boolean;
+  fullWidth?: boolean;
+}) => (
+  <div
+    className={`hover:bg-muted/50 flex items-start gap-4 rounded-lg p-2 transition-colors ${fullWidth ? 'col-span-full' : ''}`}
+  >
+    <div
+      className={`bg-muted text-muted-foreground shrink-0 rounded-full ${compact ? 'p-1.5' : 'p-2'}`}
+    >
+      <Icon size={compact ? 14 : 18} />
+    </div>
+    <div className="flex-1 space-y-0.5">
+      <p className="text-muted-foreground text-xs font-medium uppercase">
+        {label}
+      </p>
+      <p className="text-foreground text-sm leading-relaxed font-semibold break-words">
+        {value || '—'}
+      </p>
+    </div>
   </div>
 );
 
