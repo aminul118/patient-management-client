@@ -18,11 +18,13 @@ const GdmMultiStepForm = () => {
     resolver: zodResolver(gdmFormSchema),
     defaultValues: {
       patientId: '',
+      counselingDate: '',
       name: '',
       age: '',
       maritalStatus: 'married',
       height: '',
       weight: '',
+      complication: '',
       occupation: '',
       familyIncome: '',
       address: '',
@@ -46,9 +48,12 @@ const GdmMultiStepForm = () => {
   const nextStep = async () => {
     const isValid = await form.trigger([
       'patientId',
+      'counselingDate',
       'name',
       'age',
       'weight',
+      'height',
+      'complication',
       'address',
       'phone',
       'emergencyContact',

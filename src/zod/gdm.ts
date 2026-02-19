@@ -3,16 +3,16 @@ import { z } from 'zod';
 export const gdmFormSchema = z.object({
   // Step 1
   patientId: z.string().min(1, 'Patient ID is required'),
-  name: z.string().min(2, 'Name is required'),
-  age: z.string().min(1),
+  name: z.string().min(1, 'Name is required'),
+  age: z.string().min(1, 'Age is required'),
   maritalStatus: z.enum(['married', 'unmarried']),
-  height: z.string().min(1),
-  weight: z.string().min(1),
-  occupation: z.string().min(2),
-  familyIncome: z.string().min(1),
-  address: z.string().min(5),
-  phone: z.string().min(10),
-  emergencyContact: z.string().min(10),
+  height: z.string().min(1, 'Height is required'),
+  weight: z.string().min(1, 'Weight is required'),
+  occupation: z.string().min(1, 'Occupation is required'),
+  familyIncome: z.string().min(1, 'Family Income is required'),
+  address: z.string().min(1, 'Address is required'),
+  phone: z.string().min(1, 'Phone Number is required'),
+  emergencyContact: z.string().optional(),
 
   // Step 2
   diabetesKnownSince: z
@@ -27,6 +27,9 @@ export const gdmFormSchema = z.object({
   babyWeight: z.string().optional(),
   BabyNICUNeed: z.enum(['yes', 'no']).optional(),
   sugarLevel2to3DayAfterDelivery: z.string().optional(),
+
+  counselingDate: z.string().optional(),
+  complication: z.string().optional(),
 
   // ✅ NEW: OGTT at 6 weeks
   ogttDoneAt6Weeks: z.enum(['yes', 'no']).optional(),

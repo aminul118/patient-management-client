@@ -25,17 +25,23 @@ const StepBasicInfo = ({ form, onNext }: Props) => {
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 2xl:grid-cols-3">
         {[
-          ['patientId', 'Patient ID'],
-          ['name', 'Name'],
-          ['age', 'Age'],
-          ['weight', 'Weight (kg)'],
-          ['height', 'Height (cm)'],
-          ['occupation', 'Occupation'],
-          ['familyIncome', 'Family Income (H+W)'],
-          ['address', 'Address'],
-          ['phone', 'Phone Number'],
-          ['emergencyContact', 'Emergency Contact'],
-        ].map(([name, label]) => (
+          { name: 'patientId', label: 'Patient ID', type: 'text' },
+          { name: 'counselingDate', label: 'Counseling Date', type: 'date' },
+          { name: 'name', label: 'Name', type: 'text' },
+          { name: 'age', label: 'Age', type: 'number' },
+          { name: 'weight', label: 'Weight (kg)', type: 'number' },
+          { name: 'height', label: 'Height (cm)', type: 'number' },
+          { name: 'complication', label: 'Complication', type: 'text' },
+          { name: 'occupation', label: 'Occupation', type: 'text' },
+          {
+            name: 'familyIncome',
+            label: 'Family Income (H+W)',
+            type: 'number',
+          },
+          { name: 'address', label: 'Address', type: 'text' },
+          { name: 'phone', label: 'Phone Number', type: 'tel' },
+          { name: 'emergencyContact', label: 'Emergency Contact', type: 'tel' },
+        ].map(({ name, label, type }) => (
           <FormField
             key={name}
             control={form.control}
@@ -44,7 +50,11 @@ const StepBasicInfo = ({ form, onNext }: Props) => {
               <FormItem>
                 <FormLabel>{label}</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input
+                    type={type}
+                    {...field}
+                    value={field.value?.toString() || ''}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

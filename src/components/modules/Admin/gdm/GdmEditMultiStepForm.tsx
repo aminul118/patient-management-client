@@ -41,9 +41,12 @@ const GdmEditMultiStepForm = ({
   const nextStep = async () => {
     const isValid = await form.trigger([
       'patientId',
+      'counselingDate',
       'name',
       'age',
       'weight',
+      'height',
+      'complication',
       'address',
       'phone',
       'emergencyContact',

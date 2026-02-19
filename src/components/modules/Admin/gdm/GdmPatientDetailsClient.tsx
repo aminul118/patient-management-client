@@ -31,12 +31,16 @@ const GdmPatientDetailsClient = ({ patient, slug }: Props) => {
   const defaultValues = useMemo<GdmFormValues>(
     () => ({
       patientId: patient?.patientId ?? '',
+      counselingDate: patient?.counselingDate
+        ? new Date(patient.counselingDate).toISOString().split('T')[0]
+        : '',
       name: patient?.name ?? '',
       age: patient?.age ?? '',
       maritalStatus:
         patient?.maritalStatus === 'unmarried' ? 'unmarried' : 'married',
       height: patient?.height ?? '',
       weight: patient?.weight ?? '',
+      complication: patient?.complication ?? '',
       occupation: patient?.occupation ?? '',
       familyIncome: patient?.familyIncome ?? '',
       address: patient?.address ?? '',
@@ -133,6 +137,14 @@ const GdmPatientDetailsClient = ({ patient, slug }: Props) => {
           </CardHeader>
           <CardContent className="grid gap-2">
             <InfoRow label="Patient ID" value={patient?.patientId} />
+            <InfoRow
+              label="Counseling Date"
+              value={
+                patient?.counselingDate
+                  ? new Date(patient.counselingDate).toLocaleDateString()
+                  : ''
+              }
+            />
             <InfoRow label="Name" value={patient?.name} />
             <InfoRow label="Age" value={patient?.age} />
             <InfoRow label="Marital Status" value={patient?.maritalStatus} />
@@ -162,6 +174,7 @@ const GdmPatientDetailsClient = ({ patient, slug }: Props) => {
           <CardContent className="grid gap-2">
             <InfoRow label="Height" value={patient?.height} />
             <InfoRow label="Weight" value={patient?.weight} />
+            <InfoRow label="Complication" value={patient?.complication} />
             <Separator />
             <InfoRow label="BMI" value={bmi} />
           </CardContent>
