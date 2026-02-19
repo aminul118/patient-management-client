@@ -107,6 +107,22 @@ const GdmPatientDetailsClient = ({ patient, slug }: Props) => {
     return val.toFixed(2);
   }, [patient?.height, patient?.weight]);
 
+  // Height in Feet/Inches Calculate
+  const heightInFeetInches = useMemo(() => {
+    const hStr = String(patient?.height ?? '').replace(/,/g, '.');
+    const h = parseFloat(hStr);
+
+    if (isNaN(h) || h <= 0) return null;
+
+    // Heuristic: if height > 3, assume cm, else meters
+    const heightInCm = h > 3 ? h : h * 100;
+    const totalInches = heightInCm * 0.393701;
+    const feet = Math.floor(totalInches / 12);
+    const inches = Math.round(totalInches % 12);
+
+    return `${feet}' ${inches}"`;
+  }, [patient?.height]);
+
   if (isEditing) {
     return (
       <div className="container mx-auto space-y-4 px-2">
@@ -132,7 +148,7 @@ const GdmPatientDetailsClient = ({ patient, slug }: Props) => {
   }
 
   return (
-    <div className="container mx-auto max-w-7xl space-y-6 p-2">
+    <div className="container mx-auto space-y-6 p-2">
       {/* Header Actions */}
       <div className="flex items-center justify-between">
         <div>
@@ -154,7 +170,7 @@ const GdmPatientDetailsClient = ({ patient, slug }: Props) => {
       <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
         {/* Left Sidebar - Patient Identity & Social */}
         <div className="space-y-6 md:col-span-4 lg:col-span-3">
-          <Card className="overflow-hidden border-none shadow-md">
+          <Card className="overflow-hidden border-none pt-0 shadow-md">
             <div className="bg-primary/10 text-primary flex h-32 items-center justify-center">
               <User size={64} className="opacity-80" />
             </div>
@@ -230,6 +246,7 @@ const GdmPatientDetailsClient = ({ patient, slug }: Props) => {
               value={patient?.height}
               unit="cm"
               icon={Activity}
+              subValue={heightInFeetInches}
             />
             <StatsCard
               label="Weight"
@@ -251,7 +268,7 @@ const GdmPatientDetailsClient = ({ patient, slug }: Props) => {
           </div>
 
           {/* Medical History Section */}
-          <Card className="overflow-hidden border-none shadow-md">
+          <Card className="overflow-hidden border-none py-0 shadow-md">
             <CardHeader className="bg-muted/30 border-b px-6 py-4">
               <div className="flex items-center gap-2">
                 <div className="bg-primary/10 text-primary rounded-full p-2">
@@ -299,7 +316,7 @@ const GdmPatientDetailsClient = ({ patient, slug }: Props) => {
 
           <div className="grid gap-6 lg:grid-cols-2">
             {/* Pregnancy & Delivery */}
-            <Card className="overflow-hidden border-none shadow-md">
+            <Card className="overflow-hidden border-none py-0 shadow-md">
               <CardHeader className="bg-muted/30 border-b px-6 py-4">
                 <div className="flex items-center gap-2">
                   <div className="bg-secondary text-secondary-foreground rounded-full p-2">
@@ -333,7 +350,7 @@ const GdmPatientDetailsClient = ({ patient, slug }: Props) => {
             </Card>
 
             {/* OGTT Results */}
-            <Card className="overflow-hidden border-none shadow-md">
+            <Card className="overflow-hidden border-none pt-0 shadow-md">
               <CardHeader className="bg-muted/30 border-b px-6 py-4">
                 <div className="flex items-center gap-2">
                   <div className="bg-accent text-accent-foreground rounded-full p-2">
@@ -383,19 +400,21 @@ const StatsCard = ({
   unit,
   icon: Icon,
   highlight,
+  subValue,
 }: {
   label: string;
   value: string | number;
   unit?: string;
   icon: any;
   highlight?: boolean;
+  subValue?: string | null;
 }) => (
   <Card
-    className={`border-none shadow-sm transition-shadow hover:shadow-md ${highlight ? 'bg-destructive/10 ring-destructive/20 ring-1' : 'bg-card'}`}
+    className={`relative border-none shadow-sm transition-shadow hover:shadow-md ${highlight ? 'bg-destructive/10 ring-destructive/20 ring-1' : 'bg-card'}`}
   >
-    <CardContent className="p-4">
+    <CardContent className="p-4 pb-6">
       <div className="flex items-center justify-between">
-        <p className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
+        <p className="text-muted-foreground font-medium tracking-wider uppercase">
           {label}
         </p>
         <Icon
@@ -413,6 +432,11 @@ const StatsCard = ({
           </span>
         )}
       </div>
+      {subValue && (
+        <p className="text-muted-foreground absolute right-3 bottom-3 text-xs font-medium">
+          {subValue}
+        </p>
+      )}
     </CardContent>
   </Card>
 );
