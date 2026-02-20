@@ -35,10 +35,10 @@ const serverFetchHelper = async <T>(
     (res.status === 401 || res.status === 403) &&
     endpoint !== '/auth/refresh-token'
   ) {
-    const refreshed = await getNewAccessToken();
+    const refreshed = (await getNewAccessToken()) as any;
 
     // if refresh failed, return original response body (or throw)
-    if (!refreshed) {
+    if (!refreshed.success) {
       return (await res.json()) as T;
     }
 
