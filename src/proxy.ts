@@ -11,7 +11,7 @@ import {
 } from './services/user/user-access';
 import getVerifiedUser from './services/user/verified-user';
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   const { pathname, origin } = req.nextUrl;
 
   const isAuthPage = isAuthRoute(pathname);
