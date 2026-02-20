@@ -1,7 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import baseCookieOption from './config/cookie.config';
-import envVars from './config/env.config';
 import { tryRefreshToken } from './services/auth/refreshToken';
+import { decodeToken, setAuthCookies } from './services/user/proxy-utils';
 import {
   getDefaultDashboardRoute,
   getRouteOwner,
@@ -21,6 +20,10 @@ export async function proxy(req: NextRequest) {
   let user = await getVerifiedUser(req);
   let response = NextResponse.next();
 
+  // Helper for redirection
+  const redirectTo = (path: string) =>
+    NextResponse.redirect(new URL(path, origin));
+
   // 2) If access is invalid but refresh exists -> refresh once (avoid doing this on auth pages)
   if (!user && !isAuthPage && routeOwner !== null) {
     const refreshed = await tryRefreshToken(req);
@@ -29,67 +32,37 @@ export async function proxy(req: NextRequest) {
       const { accessToken, refreshToken } = refreshed;
 
       // Set the new tokens in the response cookies
-      response.cookies.set('accessToken', accessToken, {
-        ...baseCookieOption,
-        maxAge: Number(envVars.jwt.accessTokenMaxAge) || 60 * 60,
-      });
+      setAuthCookies(response, accessToken, refreshToken);
 
-      if (refreshToken) {
-        response.cookies.set('refreshToken', refreshToken, {
-          ...baseCookieOption,
-          maxAge: Number(envVars.jwt.refreshTokenMaxAge) || 60 * 60 * 24 * 7,
-        });
-      }
-
-      // Re-check user with the new token to allow the request to proceed if valid
-      // Since we just got this token from the backend, we can optionally decode it
-      // or just call getVerifiedUser if it can handle the new token.
-      // getVerifiedUser(req) uses req.cookies, so we need to mock or manually check.
-      // For now, let's try to re-verify by passing the new token if we had a helper,
-      // but getVerifiedUser is tied to NextRequest.
-
-      // Simple decode for role-based logic in middleware
-      try {
-        const base64Url = accessToken.split('.')[1];
-        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        const payload = JSON.parse(atob(base64));
-        user = payload;
-      } catch (e) {
-        console.error('Failed to decode new token:', e);
-      }
+      // Decode token to get user info (role, etc.)
+      user = decodeToken(accessToken);
     }
   }
 
   const role = user?.role as UserRole | undefined;
 
-  // Prevent that user does not go to root route
+  // 3) Handle Root Route
   if (pathname === '/') {
-    if (!user) return NextResponse.redirect(new URL('/login', origin));
-    return NextResponse.redirect(
-      new URL(getDefaultDashboardRoute(role!), origin),
-    );
+    if (!user) return redirectTo('/login');
+    return redirectTo(getDefaultDashboardRoute(role!));
   }
 
-  // allow public auth pages
+  // 4) Public Auth Pages (guest allowed)
   if (!user && isAuthPage) return response;
 
-  // logged-in users should not see auth pages
+  // 5) Logged-in users should not see auth pages
   if (user && isAuthPage) {
-    return NextResponse.redirect(
-      new URL(getDefaultDashboardRoute(role!), origin),
-    );
+    return redirectTo(getDefaultDashboardRoute(role!));
   }
 
-  // protect routes
+  // 6) Protect protected routes for guests
   if (!user && routeOwner !== null && pathname !== '/login') {
-    return NextResponse.redirect(new URL('/login', origin));
+    return redirectTo('/login');
   }
 
-  // role protection
+  // 7) Role-based protection
   if (user && !isValidRedirectForRole(pathname, role!)) {
-    return NextResponse.redirect(
-      new URL(getDefaultDashboardRoute(role!), origin),
-    );
+    return redirectTo(getDefaultDashboardRoute(role!));
   }
 
   return response;
