@@ -60,7 +60,7 @@ const ChangePasswordClient = () => {
   };
 
   return (
-    <div className="w-full max-w-4xl">
+    <section className="w-full">
       <Card>
         <CardHeader>
           <div className="flex items-center gap-3">
@@ -198,7 +198,7 @@ const ChangePasswordClient = () => {
           </Form>
         </CardContent>
       </Card>
-    </div>
+    </section>
   );
 };
 

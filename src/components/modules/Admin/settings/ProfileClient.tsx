@@ -118,7 +118,7 @@ const ProfileClient = ({ user }: Props) => {
     .toUpperCase();
 
   return (
-    <div className="w-full max-w-4xl">
+    <section>
       <Card>
         <CardHeader>
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
@@ -272,7 +272,7 @@ const ProfileClient = ({ user }: Props) => {
           onClose={() => setShowCropper(false)}
         />
       )}
-    </div>
+    </section>
   );
 };
 
