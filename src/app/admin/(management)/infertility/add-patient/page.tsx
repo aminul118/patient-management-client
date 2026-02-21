@@ -1,11 +1,11 @@
-import React from 'react';
+import InfertilityPatientForm from '@/components/modules/Admin/infertility/infertility-patient-form';
 
-const AddInfertilityPatient = () => {
-    return (
-        <div>
-            
-        </div>
-    );
+const AddInfertilityPatientPage = () => {
+  return (
+    <section className="mx-auto w-11/12">
+      <InfertilityPatientForm />
+    </section>
+  );
 };
 
-export default AddInfertilityPatient;
+export default AddInfertilityPatientPage;

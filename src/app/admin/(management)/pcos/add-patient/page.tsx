@@ -1,11 +1,11 @@
-import React from 'react';
+import PcosPatientForm from '@/components/modules/Admin/pcos/pcos-patient-form';
 
-const AddPcosPatient = () => {
-    return (
-        <div>
-            
-        </div>
-    );
+const AddPcosPatientPage = () => {
+  return (
+    <section className="mx-auto w-11/12">
+      <PcosPatientForm />
+    </section>
+  );
 };
 
-export default AddPcosPatient;
+export default AddPcosPatientPage;

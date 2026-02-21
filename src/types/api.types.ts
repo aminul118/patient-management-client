@@ -74,6 +74,122 @@ export interface IGdm {
   diabetesDuration?: string;
   insulin?: 'yes' | 'no';
   comorbidity?: string;
+  complication?: string;
+  counselingDate?: Date;
+
+  deliveryTimeInWeek?: string;
+  deliveryType?: 'normal' | 'c-section';
+  babyWeight?: string;
+  BabyNICUNeed?: 'yes' | 'no';
+  sugarLevel2to3DayAfterDelivery?: string;
+
+  // OGTT at 6 weeks
+  ogttDoneAt6Weeks?: 'yes' | 'no';
+  ogttFastingValue?: string;
+  ogtt2HourValue?: string;
+
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface IPcos {
+  _id: string;
+  // Step 1
+  patientId: string;
+  name: string;
+  age: string;
+  maritalStatus: 'married' | 'unmarried';
+  height: string;
+  weight: string;
+  occupation: string;
+  familyIncome: string;
+  address: string;
+  phone: string;
+  emergencyContact: string;
+
+  // Step 2
+  diabetesKnownSince?: 'before_pregnancy' | 'during_pregnancy' | 'custom';
+  diabetesDuration?: string;
+  insulin?: 'yes' | 'no';
+  comorbidity?: string;
+  complication?: string;
+  counselingDate?: Date;
+
+  deliveryTimeInWeek?: string;
+  deliveryType?: 'normal' | 'c-section';
+  babyWeight?: string;
+  BabyNICUNeed?: 'yes' | 'no';
+  sugarLevel2to3DayAfterDelivery?: string;
+
+  // OGTT at 6 weeks
+  ogttDoneAt6Weeks?: 'yes' | 'no';
+  ogttFastingValue?: string;
+  ogtt2HourValue?: string;
+
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface IInfertility {
+  _id: string;
+  // Step 1
+  patientId: string;
+  name: string;
+  age: string;
+  maritalStatus: 'married' | 'unmarried';
+  height: string;
+  weight: string;
+  occupation: string;
+  familyIncome: string;
+  address: string;
+  phone: string;
+  emergencyContact: string;
+
+  // Step 2
+  diabetesKnownSince?: 'before_pregnancy' | 'during_pregnancy' | 'custom';
+  diabetesDuration?: string;
+  insulin?: 'yes' | 'no';
+  comorbidity?: string;
+  complication?: string;
+  counselingDate?: Date;
+
+  deliveryTimeInWeek?: string;
+  deliveryType?: 'normal' | 'c-section';
+  babyWeight?: string;
+  BabyNICUNeed?: 'yes' | 'no';
+  sugarLevel2to3DayAfterDelivery?: string;
+
+  // OGTT at 6 weeks
+  ogttDoneAt6Weeks?: 'yes' | 'no';
+  ogttFastingValue?: string;
+  ogtt2HourValue?: string;
+
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface IOverWeight {
+  _id: string;
+  // Step 1
+  patientId: string;
+  name: string;
+  age: string;
+  maritalStatus: 'married' | 'unmarried';
+  height: string;
+  weight: string;
+  occupation: string;
+  familyIncome: string;
+  address: string;
+  phone: string;
+  emergencyContact: string;
+
+  // Step 2
+  diabetesKnownSince?: 'before_pregnancy' | 'during_pregnancy' | 'custom';
+  diabetesDuration?: string;
+  insulin?: 'yes' | 'no';
+  comorbidity?: string;
+  complication?: string;
+  counselingDate?: Date;
 
   deliveryTimeInWeek?: string;
   deliveryType?: 'normal' | 'c-section';
@@ -93,5 +209,8 @@ export interface IGdm {
 export interface IStats {
   userCount: number;
   GdmPatientCount: number;
+  PcosPatientCount: number;
+  InfertilityPatientCount: number;
+  OverWeightPatientCount: number;
   totalPatient: number;
 }

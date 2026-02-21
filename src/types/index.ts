@@ -6,6 +6,9 @@ export type {
   IBlog,
   IContact,
   IGdm,
+  IInfertility,
+  IOverWeight,
+  IPcos,
   IStats,
   IUser,
 } from './api.types';

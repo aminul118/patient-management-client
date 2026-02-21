@@ -1,11 +1,11 @@
-import React from 'react';
+import OverWeightPatientForm from '@/components/modules/Admin/over-weight/over-weight-patient-form';
 
-const AddOverweightPatient = () => {
-    return (
-        <div>
-            
-        </div>
-    );
+const AddOverWeightPatientPage = () => {
+  return (
+    <section className="mx-auto w-11/12">
+      <OverWeightPatientForm />
+    </section>
+  );
 };
 
-export default AddOverweightPatient;
+export default AddOverWeightPatientPage;

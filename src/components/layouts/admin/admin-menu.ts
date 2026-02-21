@@ -1,5 +1,12 @@
 import { MenuGroup } from '@/types';
-import { BookImage, Gauge, Users } from 'lucide-react';
+import {
+  Activity,
+  Baby,
+  Gauge,
+  Stethoscope,
+  Users,
+  Weight,
+} from 'lucide-react';
 
 export const adminSidebarmenu: MenuGroup[] = [
   {
@@ -13,25 +20,25 @@ export const adminSidebarmenu: MenuGroup[] = [
       {
         name: 'GDM Management',
         url: '/admin/gdm',
-        icon: BookImage,
+        icon: Activity,
       },
       {
         name: 'PCOS Management',
         url: '/admin/pcos',
-        icon: BookImage,
+        icon: Stethoscope,
       },
       {
         name: 'Infertility Management',
         url: '/admin/infertility',
-        icon: BookImage,
+        icon: Baby,
       },
       {
         name: 'Overweight Management',
         url: '/admin/over-weight',
-        icon: BookImage,
+        icon: Weight,
       },
       {
-        name: 'Registered Users',
+        name: 'Users',
         url: '/admin/users',
         icon: Users,
       },
